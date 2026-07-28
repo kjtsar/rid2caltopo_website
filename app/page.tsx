@@ -28,27 +28,22 @@ export const metadata: Metadata = {
     "Free and managed tools that turn Remote ID observations into useful field awareness for search-and-rescue teams.",
 };
 
-const capabilities = [
-  {
-    number: "01",
-    title: "See nearby aircraft",
-    copy: "Receive compatible Remote ID broadcasts, inspect aircraft details, and follow tracks on a field map.",
-  },
-  {
-    number: "02",
-    title: "Publish useful coverage",
-    copy: "Turn accepted observations into live CalTopo tracks and retain archives for post-incident review.",
-  },
-  {
-    number: "03",
-    title: "Coordinate multiple zones",
-    copy: "Use several Bridge-and-device teams without every receiver writing a duplicate aircraft track.",
-  },
-  {
-    number: "04",
-    title: "Review field video",
-    copy: "Relay controller video locally, capture potential clues, and use on-device anomaly-assist modes for review.",
-  },
+const freeCapabilities = [
+  "Receive and display ASTM F3411 Remote ID broadcasts",
+  "Record aircraft tracks locally on the phone or tablet",
+  "Publish tracks directly to CalTopo Teams incident maps",
+  "Stream controller video locally for squinter review",
+  "Capture potential clues and use on-device anomaly assist",
+  "Operate without an r2c-tracker service",
+];
+
+const trackerCapabilities = [
+  "Coordinate multiple Bridge-and-device zones across an incident",
+  "Assign track ownership and suppress duplicate CalTopo tracks",
+  "Relay sightings and hand off ownership as aircraft move between zones",
+  "Support shared organization and mutual-aid coordination",
+  "Keep FAA NOTAM credentials server-side while proxying app queries",
+  "Aggregate flight logs, metadata, weather, and administrative exports",
 ];
 
 const tutorials = [
@@ -180,28 +175,17 @@ export default async function Home({ searchParams }: PageProps) {
           </p>
         </div>
 
-        <div className="hero-visual" aria-label="RID2Caltopo live track preview">
-          <div className="topo-ring ring-one" />
-          <div className="topo-ring ring-two" />
-          <div className="topo-ring ring-three" />
-          <div className="app-frame">
-            <div className="app-frame-bar">
-              <span>LIVE MAP</span>
-              <span className="live-status">● 2 ACTIVE</span>
-            </div>
+        <div className="hero-visual">
+          <div className="hero-art-frame">
             <img
-              src="/rid2caltopo-live-map.png"
-              alt="RID2Caltopo map showing two aircraft tracks"
+              src="/og.png"
+              alt="Illustrated topographic field map with two aircraft search tracks, radio signals, and a search pack"
             />
           </div>
-          <div className="field-note field-note-one">
-            <span>01</span>
-            Remote ID received
-          </div>
-          <div className="field-note field-note-two">
-            <span>02</span>
-            Track shared
-          </div>
+          <p className="hero-art-caption">
+            <span>FIELD AWARENESS</span>
+            Two aircraft. Two search tracks. One clearer operational picture.
+          </p>
         </div>
       </section>
 
@@ -221,7 +205,10 @@ export default async function Home({ searchParams }: PageProps) {
             <div className="flow-icon drone-icon" aria-hidden="true">✣</div>
             <p className="step">STEP 01</p>
             <h3>Aircraft broadcasts</h3>
-            <p>A compatible drone transmits its Remote ID position over local radio.</p>
+            <p>
+              Drones used in a SAR mission are required to broadcast ASTM F3411
+              Remote ID.
+            </p>
           </article>
           <div className="flow-line" aria-hidden="true"><span>RADIO</span></div>
           <article className="bridge-card">
@@ -232,22 +219,32 @@ export default async function Home({ searchParams }: PageProps) {
             <div>
               <p className="step">STEP 02</p>
               <h3>Bridge receives</h3>
-              <p>A raised DroneScout Bridge can improve reception beyond a phone or tablet alone.</p>
+              <p>
+                A raised DroneScout Bridge can receive Remote ID broadcasts over
+                thousands of feet when terrain, line of sight, and radio
+                conditions cooperate.
+              </p>
             </div>
           </article>
-          <div className="flow-line" aria-hidden="true"><span>LOCAL</span></div>
+          <div className="flow-line" aria-hidden="true"><span>BRIDGE LINK</span></div>
           <article>
             <div className="flow-icon device-icon" aria-hidden="true">⌖</div>
             <p className="step">STEP 03</p>
-            <h3>RID2Caltopo acts</h3>
-            <p>Operators inspect tracks locally and, when configured, publish accepted coverage.</p>
+            <h3>RID2Caltopo records</h3>
+            <p>
+              RID2Caltopo records tracks locally and directly to CalTopo Teams
+              incident maps.
+            </p>
           </article>
-          <div className="flow-line" aria-hidden="true"><span>SECURE</span></div>
+          <div className="flow-line" aria-hidden="true"><span>LOCAL VIDEO</span></div>
           <article>
-            <div className="flow-icon map-icon" aria-hidden="true">⌁</div>
+            <div className="flow-icon map-icon" aria-hidden="true">▶</div>
             <p className="step">STEP 04</p>
-            <h3>The team coordinates</h3>
-            <p>CalTopo and optional tracker coordination give the incident a shared operational view.</p>
+            <h3>Squinters review video</h3>
+            <p>
+              Stream video locally from a drone to a tablet to engage squinters
+              in reviewing the live feed.
+            </p>
           </article>
         </div>
       </section>
@@ -255,23 +252,58 @@ export default async function Home({ searchParams }: PageProps) {
       <section className="capabilities section" id="capabilities">
         <div className="section-heading split-heading">
           <div>
-            <p className="eyebrow">One field toolkit</p>
-            <h2>Awareness that follows the operation.</h2>
+            <p className="eyebrow">A clear capability boundary</p>
+            <h2>Free app first. Tracker when coordination grows.</h2>
           </div>
           <p>
-            Start with local Remote ID awareness. Add CalTopo publishing,
-            multi-zone coordination, or local video workflows when your team is
-            ready.
+            The free app is operational on its own. The optional r2c-tracker
+            adds cross-device coordination and server-side services; it does
+            not unlock the core field tools.
           </p>
         </div>
-        <div className="capability-grid">
-          {capabilities.map((capability) => (
-            <article key={capability.number}>
-              <span className="cap-number">{capability.number}</span>
-              <h3>{capability.title}</h3>
-              <p>{capability.copy}</p>
-            </article>
-          ))}
+        <div className="capability-split">
+          <article className="capability-panel free-panel">
+            <div className="capability-panel-heading">
+              <div>
+                <span className="cap-kicker">FREE RID2CALTOPO APP</span>
+                <h3>Works without a tracker.</h3>
+              </div>
+              <span className="cap-price">$0</span>
+            </div>
+            <p className="cap-summary">
+              Install the app, add a Bridge when greater reception is needed,
+              and connect directly to your CalTopo Teams incident map.
+            </p>
+            <ul className="capability-list">
+              {freeCapabilities.map((capability) => (
+                <li key={capability}>
+                  <span aria-hidden="true">✓</span>
+                  {capability}
+                </li>
+              ))}
+            </ul>
+          </article>
+          <article className="capability-panel tracker-panel">
+            <div className="capability-panel-heading">
+              <div>
+                <span className="cap-kicker">OPTIONAL R2C-TRACKER</span>
+                <h3>Adds incident-wide coordination.</h3>
+              </div>
+              <span className="cap-adds">ADDS</span>
+            </div>
+            <p className="cap-summary">
+              Self-host the open tracker for free or use the managed pilot when
+              your organization does not want to administer cloud services.
+            </p>
+            <ul className="capability-list">
+              {trackerCapabilities.map((capability) => (
+                <li key={capability}>
+                  <span aria-hidden="true">+</span>
+                  {capability}
+                </li>
+              ))}
+            </ul>
+          </article>
         </div>
         <div className="qualification-note">
           <strong>Built honestly.</strong>

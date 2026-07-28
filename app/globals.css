@@ -300,98 +300,51 @@ h1 em {
 
 .hero-visual {
   align-self: center;
-  min-height: 520px;
+  min-height: 540px;
   position: relative;
 }
 
-.topo-ring {
-  border: 1px solid rgba(24, 59, 43, 0.25);
-  border-radius: 46% 54% 61% 39% / 42% 44% 56% 58%;
-  height: 590px;
-  position: absolute;
-  right: -100px;
-  top: -40px;
-  transform: rotate(-16deg);
-  width: 640px;
-}
-
-.ring-two {
-  height: 485px;
-  right: -34px;
-  top: 18px;
-  transform: rotate(5deg);
-  width: 520px;
-}
-
-.ring-three {
-  height: 390px;
-  right: 25px;
-  top: 64px;
-  transform: rotate(24deg);
-  width: 405px;
-}
-
-.app-frame {
-  background: #fff;
-  border: 1px solid rgba(21, 35, 29, 0.22);
-  box-shadow: 18px 24px 0 rgba(24, 59, 43, 0.12);
-  height: 470px;
+.hero-art-frame {
+  border: 1px solid rgba(21, 35, 29, 0.25);
+  box-shadow: 18px 24px 0 rgba(24, 59, 43, 0.15);
+  height: 490px;
   overflow: hidden;
   position: absolute;
-  right: 8%;
-  top: 25px;
-  transform: rotate(1.5deg);
-  width: min(440px, 78%);
+  right: -5%;
+  top: 0;
+  transform: rotate(1deg);
+  width: min(570px, 94%);
 }
 
-.app-frame-bar {
-  align-items: center;
-  background: var(--ink);
-  color: white;
-  display: flex;
-  font-family: var(--font-plex-mono), monospace;
-  font-size: 10px;
-  justify-content: space-between;
-  letter-spacing: 0.08em;
-  padding: 13px 16px;
-}
-
-.live-status {
-  color: #8ed693;
-}
-
-.app-frame img {
-  height: calc(100% - 40px);
+.hero-art-frame img {
+  height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: 75% center;
   width: 100%;
 }
 
-.field-note {
+.hero-art-caption {
   background: var(--forest);
   color: white;
   font-family: var(--font-plex-mono), monospace;
   font-size: 10px;
+  left: 0;
   letter-spacing: 0.05em;
-  padding: 12px 15px;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 360px;
+  padding: 14px 17px;
   position: absolute;
+  top: 435px;
   text-transform: uppercase;
   z-index: 4;
 }
 
-.field-note span {
+.hero-art-caption span {
   color: #f5a17c;
-  margin-right: 9px;
-}
-
-.field-note-one {
-  left: 4%;
-  top: 92px;
-}
-
-.field-note-two {
-  bottom: 32px;
-  right: 1%;
+  display: block;
+  font-size: 8px;
+  margin-bottom: 4px;
 }
 
 .trust-strip {
@@ -456,7 +409,7 @@ h1 em {
 }
 
 .signal-flow h3,
-.capability-grid h3,
+.capability-panel h3,
 .tutorial-grid h3,
 .choice-grid h3 {
   font-size: 25px;
@@ -465,7 +418,6 @@ h1 em {
 }
 
 .signal-flow article > p:last-child,
-.capability-grid article > p,
 .tutorial-grid article > p {
   color: var(--muted);
   line-height: 1.55;
@@ -542,31 +494,117 @@ h1 em {
   color: #b7c4b8;
 }
 
-.capability-grid {
-  border-left: 1px solid rgba(255, 255, 255, 0.18);
+.capability-split {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  grid-template-columns: repeat(2, 1fr);
   margin-top: 65px;
 }
 
-.capability-grid article {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  min-height: 290px;
-  padding: 30px 26px;
+.capability-panel {
+  min-height: 610px;
+  padding: clamp(28px, 3.5vw, 50px);
 }
 
-.cap-number {
-  color: #82a78c;
+.free-panel {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tracker-panel {
+  background: #173e2c;
+  border: 2px solid rgba(242, 106, 46, 0.75);
+  color: white;
+}
+
+.capability-panel-heading {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  min-height: 140px;
+  padding-bottom: 28px;
+}
+
+.tracker-panel .capability-panel-heading {
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+}
+
+.cap-kicker {
+  color: var(--orange-dark);
   display: block;
   font-family: var(--font-plex-mono), monospace;
-  font-size: 11px;
-  margin-bottom: 72px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
 }
 
-.capability-grid article > p {
+.tracker-panel .cap-kicker {
+  color: #f5a17c;
+}
+
+.capability-panel h3 {
+  font-size: clamp(29px, 2.8vw, 42px);
+  line-height: 1.05;
+  margin-bottom: 0;
+  max-width: 430px;
+}
+
+.cap-price {
+  color: var(--orange-dark);
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.cap-adds {
+  border: 1px solid #f5a17c;
+  color: #f5a17c;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 8px 10px;
+}
+
+.cap-summary {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.55;
+  margin: 28px 0;
+}
+
+.tracker-panel .cap-summary {
   color: #b7c4b8;
+}
+
+.capability-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.capability-list li {
+  align-items: flex-start;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 20px 1fr;
+  line-height: 1.45;
+  padding: 14px 0;
+}
+
+.tracker-panel .capability-list li {
+  border-top-color: rgba(255, 255, 255, 0.14);
+  color: #d8e2d9;
+}
+
+.capability-list li > span {
+  color: var(--orange-dark);
+  font-weight: 800;
+}
+
+.tracker-panel .capability-list li > span {
+  color: #f5a17c;
 }
 
 .qualification-note {
@@ -955,9 +993,6 @@ footer {
     display: none;
   }
 
-  .capability-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 800px) {
@@ -981,12 +1016,7 @@ footer {
 
   .hero-visual {
     margin-top: 58px;
-    min-height: 490px;
-  }
-
-  .app-frame {
-    right: 8%;
-    width: 78%;
+    min-height: 520px;
   }
 
   .trust-strip {
@@ -1000,6 +1030,7 @@ footer {
   }
 
   .split-heading,
+  .capability-split,
   .choice-grid,
   .tutorial-grid,
   .test-cta {
@@ -1055,19 +1086,14 @@ footer {
     min-height: 410px;
   }
 
-  .app-frame {
+  .hero-art-frame {
     height: 360px;
-    right: 5%;
-    width: 88%;
+    right: 0;
+    width: 96%;
   }
 
-  .field-note-one {
-    left: -3%;
-    top: 60px;
-  }
-
-  .field-note-two {
-    bottom: 10px;
+  .hero-art-caption {
+    top: 315px;
   }
 
   .section {
@@ -1075,17 +1101,13 @@ footer {
     padding-right: 20px;
   }
 
-  .signal-flow,
-  .capability-grid {
+  .signal-flow {
     grid-template-columns: 1fr;
   }
 
-  .capability-grid article {
-    min-height: 230px;
-  }
-
-  .cap-number {
-    margin-bottom: 42px;
+  .capability-panel {
+    min-height: auto;
+    padding: 28px 22px;
   }
 
   .qualification-note {
