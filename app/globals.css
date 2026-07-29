@@ -300,14 +300,14 @@ h1 em {
 
 .hero-visual {
   align-self: center;
-  min-height: 540px;
+  min-height: 470px;
   position: relative;
 }
 
 .hero-art-frame {
   border: 1px solid rgba(21, 35, 29, 0.25);
   box-shadow: 18px 24px 0 rgba(24, 59, 43, 0.15);
-  height: 490px;
+  height: 410px;
   overflow: hidden;
   position: absolute;
   right: -5%;
@@ -319,7 +319,7 @@ h1 em {
 .hero-art-frame img {
   height: 100%;
   object-fit: cover;
-  object-position: 75% center;
+  object-position: right center;
   width: 100%;
 }
 
@@ -335,7 +335,7 @@ h1 em {
   max-width: 360px;
   padding: 14px 17px;
   position: absolute;
-  top: 435px;
+  top: 365px;
   text-transform: uppercase;
   z-index: 4;
 }
@@ -1060,7 +1060,28 @@ footer {
 
 @media (max-width: 1100px) {
   .hero {
-    grid-template-columns: 1fr 0.8fr;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    max-width: 780px;
+  }
+
+  .hero-visual {
+    margin-top: 54px;
+    min-height: 460px;
+    width: min(760px, 100%);
+  }
+
+  .hero-art-frame {
+    height: 400px;
+    left: 0;
+    right: auto;
+    width: min(720px, 100%);
+  }
+
+  .hero-art-caption {
+    top: 355px;
   }
 
   .signal-flow {
@@ -1094,8 +1115,7 @@ footer {
   }
 
   .hero-visual {
-    margin-top: 58px;
-    min-height: 520px;
+    min-height: 440px;
   }
 
   .trust-strip {
@@ -1162,17 +1182,18 @@ footer {
   }
 
   .hero-visual {
-    min-height: 410px;
+    min-height: 370px;
   }
 
   .hero-art-frame {
-    height: 360px;
+    height: 320px;
     right: 0;
     width: 96%;
   }
 
   .hero-art-caption {
-    top: 315px;
+    max-width: calc(100% - 12px);
+    top: 275px;
   }
 
   .section {
