@@ -37,13 +37,22 @@ const freeCapabilities = [
   "Operate without an r2c-tracker service",
 ];
 
-const trackerCapabilities = [
-  "Coordinate multiple Bridge-and-device zones across an incident",
-  "Assign track ownership and suppress duplicate CalTopo tracks",
-  "Relay sightings and hand off ownership as aircraft move between zones",
-  "Support shared organization and mutual-aid coordination",
-  "Keep FAA NOTAM credentials server-side while proxying app queries",
-  "Aggregate flight logs, metadata, weather, and administrative exports",
+const managedCapabilities = [
+  {
+    number: "01",
+    title: "FAA, airspace & land-use checks",
+    copy: "Bring nearby flight restrictions, operational airspace context, and protected-land checks into the incident workflow with visible freshness and availability status.",
+  },
+  {
+    number: "02",
+    title: "Multiple R2C zones per incident",
+    copy: "Coordinate multiple RID2Caltopo tablets and DroneScout Bridges, assign aircraft ownership, relay sightings, and suppress duplicate CalTopo tracks.",
+  },
+  {
+    number: "03",
+    title: "BVLOS flight record support",
+    copy: "Retain an organization-wide record of flights, tracks, timestamps, aircraft metadata, and exports to support FAA BVLOS documentation and review.",
+  },
 ];
 
 const tutorials = [
@@ -286,23 +295,42 @@ export default async function Home({ searchParams }: PageProps) {
           <article className="capability-panel tracker-panel">
             <div className="capability-panel-heading">
               <div>
-                <span className="cap-kicker">OPTIONAL R2C-TRACKER</span>
-                <h3>Adds incident-wide coordination.</h3>
+                <span className="cap-kicker">OPTIONAL MANAGED TIER</span>
+                <h3>Adds compliance awareness and coordination.</h3>
               </div>
-              <span className="cap-adds">ADDS</span>
+              <span className="cap-adds">STARTER</span>
             </div>
             <p className="cap-summary">
-              Self-host the open tracker for free or use the managed pilot when
-              your organization does not want to administer cloud services.
+              The founding managed service starts with three practical needs.
+              Organizations can still self-host the open tracker instead.
             </p>
-            <ul className="capability-list">
-              {trackerCapabilities.map((capability) => (
-                <li key={capability}>
-                  <span aria-hidden="true">+</span>
-                  {capability}
+            <ol className="managed-feature-list">
+              {managedCapabilities.map((capability) => (
+                <li key={capability.number}>
+                  <span>{capability.number}</span>
+                  <div>
+                    <strong>{capability.title}</strong>
+                    <p>{capability.copy}</p>
+                  </div>
                 </li>
               ))}
-            </ul>
+            </ol>
+            <div className="planned-extension">
+              <span>PLANNED EXTENSION</span>
+              <strong>Secure video from field tablets to Incident Command</strong>
+              <p>
+                Extend the existing local video workflow so authorized Incident
+                Command personnel can review selected live feeds remotely.
+              </p>
+            </div>
+            <p className="compliance-note">
+              Record retention supports an organization&apos;s documentation;
+              operators remain responsible for their authorization, procedures,
+              and applicable FAA requirements.{" "}
+              <a href="https://www.faa.gov/newsroom/beyond-visual-line-sight-bvlos">
+                FAA BVLOS information
+              </a>
+            </p>
           </article>
         </div>
         <div className="qualification-note">
@@ -358,13 +386,15 @@ export default async function Home({ searchParams }: PageProps) {
             <h3>Let us handle the tracker.</h3>
             <p>
               A cost-sharing pilot for volunteer organizations that want
-              coordination without administering cloud infrastructure.
+              compliance awareness and incident-wide coordination without
+              administering cloud infrastructure.
             </p>
             <ul>
-              <li>Managed tracker extension</li>
+              <li>FAA, airspace, and protected-land checks</li>
+              <li>Multiple R2C zones and Bridges per incident</li>
+              <li>Organization-wide BVLOS flight record support</li>
               <li>Organization onboarding</li>
               <li>Reasonable-use cloud hosting</li>
-              <li>Direct feedback into the roadmap</li>
             </ul>
             <a className="button button-card" href={managedRequestLink}>
               Tell us about your team <ArrowIcon />
@@ -431,12 +461,16 @@ export default async function Home({ searchParams }: PageProps) {
           <h2>Build what field teams actually need next.</h2>
         </div>
         <div className="roadmap-row">
-          <span>NOW</span>
+          <span>FREE APP</span>
           <strong>Remote ID • Shared tracks • Local video • Anomaly assist</strong>
+        </div>
+        <div className="roadmap-row">
+          <span>MANAGED STARTER</span>
+          <strong>FAA / airspace / land checks • Multi-zone incidents • BVLOS record support</strong>
         </div>
         <div className="roadmap-row future">
           <span>EXPLORING</span>
-          <strong>Secure remote streaming • Trained-model video review • Additional managed services</strong>
+          <strong>Secure field-tablet streaming to Incident Command • Trained-model video review</strong>
         </div>
         <p className="roadmap-disclaimer">
           Roadmap items are research directions, not release commitments.

@@ -607,6 +607,85 @@ h1 em {
   color: #f5a17c;
 }
 
+.managed-feature-list {
+  counter-reset: none;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.managed-feature-list li {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  display: grid;
+  gap: 15px;
+  grid-template-columns: 30px 1fr;
+  padding: 17px 0;
+}
+
+.managed-feature-list li > span {
+  color: #f5a17c;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 10px;
+  padding-top: 3px;
+}
+
+.managed-feature-list strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.managed-feature-list p {
+  color: #b7c4b8;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.planned-extension {
+  background: rgba(242, 106, 46, 0.12);
+  border: 1px solid rgba(242, 106, 46, 0.6);
+  margin-top: 22px;
+  padding: 20px;
+}
+
+.planned-extension > span {
+  color: #f5a17c;
+  display: block;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.planned-extension strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 7px;
+}
+
+.planned-extension p {
+  color: #b7c4b8;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.compliance-note {
+  color: #91a495;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 8px;
+  line-height: 1.55;
+  margin: 18px 0 0;
+  text-transform: uppercase;
+}
+
+.compliance-note a {
+  color: #f5a17c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .qualification-note {
   align-items: flex-start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
