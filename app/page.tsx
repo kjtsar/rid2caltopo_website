@@ -188,13 +188,9 @@ export default async function Home({ searchParams }: PageProps) {
           <div className="hero-art-frame">
             <img
               src="/og.png"
-              alt="Illustrated topographic field map with two aircraft search tracks, radio signals, and a search pack"
+              alt="RID2CalTopo illustration reading Know where the drones have searched, with two aircraft tracks on a topographic field map"
             />
           </div>
-          <p className="hero-art-caption">
-            <span>FIELD AWARENESS</span>
-            Two aircraft. Two search tracks. One clearer operational picture.
-          </p>
         </div>
       </section>
 
