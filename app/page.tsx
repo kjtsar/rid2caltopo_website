@@ -53,6 +53,11 @@ const managedCapabilities = [
     title: "BVLOS flight record support",
     copy: "Retain an organization-wide record of flights, tracks, timestamps, aircraft metadata, and exports to support FAA BVLOS documentation and review.",
   },
+  {
+    number: "04",
+    title: "Pilot-authorized video for Incident Command",
+    copy: "Let authorized IC personnel request a live drone feed. Video leaves the field tablet only after the pilot approves the connection.",
+  },
 ];
 
 const tutorials = [
@@ -311,12 +316,13 @@ export default async function Home({ searchParams }: PageProps) {
                 </li>
               ))}
             </ol>
-            <div className="planned-extension">
-              <span>PLANNED EXTENSION</span>
-              <strong>Secure video from field tablets to Incident Command</strong>
+            <div className="planned-extension available-extension">
+              <span>FOUNDING PILOT • AVAILABLE ON IOS</span>
+              <strong>Pilot-authorized live video for Incident Command</strong>
               <p>
-                Extend the existing local video workflow so authorized Incident
-                Command personnel can review selected live feeds remotely.
+                IC may request temporary access when direct oversight is needed.
+                The feed begins only after approval on the RID2Caltopo tablet.
+                Android support is in progress.
               </p>
             </div>
             <p className="compliance-note">
@@ -332,9 +338,9 @@ export default async function Home({ searchParams }: PageProps) {
         <div className="qualification-note">
           <strong>Built honestly.</strong>
           <span>
-            Some Apple, external-radio, and video workflows remain under
-            physical-device qualification. We publish testing status instead of
-            presenting incomplete evidence as field readiness.
+            Android IC streaming and some external-radio workflows remain under
+            implementation or physical-device qualification. We publish testing
+            status instead of presenting incomplete evidence as field readiness.
           </span>
         </div>
       </section>
@@ -389,6 +395,7 @@ export default async function Home({ searchParams }: PageProps) {
               <li>FAA, airspace, and protected-land checks</li>
               <li>Multiple R2C zones and Bridges per incident</li>
               <li>Organization-wide BVLOS flight record support</li>
+              <li>Pilot-authorized live video to Incident Command</li>
               <li>Organization onboarding</li>
               <li>Reasonable-use cloud hosting</li>
             </ul>
@@ -462,11 +469,11 @@ export default async function Home({ searchParams }: PageProps) {
         </div>
         <div className="roadmap-row">
           <span>MANAGED STARTER</span>
-          <strong>FAA / airspace / land checks • Multi-zone incidents • BVLOS record support</strong>
+          <strong>FAA / airspace / land checks • Multi-zone incidents • BVLOS records • Pilot-authorized IC video</strong>
         </div>
         <div className="roadmap-row future">
           <span>EXPLORING</span>
-          <strong>Secure field-tablet streaming to Incident Command • Trained-model video review</strong>
+          <strong>Cloud video storage and playback • Trained-model video review</strong>
         </div>
         <p className="roadmap-disclaimer">
           Roadmap items are research directions, not release commitments.
