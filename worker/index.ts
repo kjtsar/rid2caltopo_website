@@ -5,6 +5,15 @@ import handler from "vinext/server/app-router-entry";
 interface Env {
   ASSETS: Fetcher;
   DB: D1Database;
+  EMAIL: {
+    send(message: {
+      from: string;
+      to: string;
+      subject: string;
+      text: string;
+      replyTo?: string;
+    }): Promise<unknown>;
+  };
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -12,6 +21,83 @@ interface Env {
       };
     };
   };
+}
+
+const notificationAddress = "kjtsar@kjt.us";
+
+function cleanField(value: FormDataEntryValue | null, maxLength: number): string {
+  return typeof value === "string"
+    ? value.replace(/[\r\n\t]+/g, " ").trim().slice(0, maxLength)
+    : "";
+}
+
+function validEmail(value: string): boolean {
+  return value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+async function handleRequestForm(request: Request, env: Env): Promise<Response> {
+  const contentLength = Number(request.headers.get("content-length") ?? "0");
+  if (contentLength > 16_384) {
+    return Response.redirect(new URL("/request-error", request.url), 303);
+  }
+
+  const form = await request.formData();
+  const requestType = cleanField(form.get("requestType"), 32);
+  const name = cleanField(form.get("name"), 100);
+  const email = cleanField(form.get("email"), 254);
+  const organization = cleanField(form.get("organization"), 120);
+  const designator = cleanField(form.get("designator"), 24);
+  const honeypot = cleanField(form.get("website"), 200);
+  const managed = requestType === "managed-pilot";
+
+  if (honeypot) {
+    return Response.redirect(
+      new URL(`/request-received?type=${encodeURIComponent(requestType)}`, request.url),
+      303,
+    );
+  }
+
+  if (
+    !name ||
+    !validEmail(email) ||
+    (requestType !== "early-access" && !managed) ||
+    (managed && (!organization || !designator))
+  ) {
+    return Response.redirect(new URL("/request-error", request.url), 303);
+  }
+
+  const subject = managed
+    ? `Request managed pilot: ${designator}`
+    : `request early app release: ${email}`;
+  const body = [
+    managed ? "Managed r2c-tracker pilot request" : "RID2Caltopo early app access request",
+    "",
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Organization: ${organization || "Not provided"}`,
+    `Organization designator: ${designator || "Not provided"}`,
+    "",
+    `Submitted: ${new Date().toISOString()}`,
+    `Site: ${new URL(request.url).host}`,
+  ].join("\n");
+
+  try {
+    await env.EMAIL.send({
+      from: "RID2Caltopo Requests <requests@rid2caltopo.com>",
+      to: notificationAddress,
+      replyTo: email,
+      subject,
+      text: body,
+    });
+  } catch (error) {
+    console.error("Request email delivery failed", error);
+    return Response.redirect(new URL("/request-error", request.url), 303);
+  }
+
+  return Response.redirect(
+    new URL(`/request-received?type=${encodeURIComponent(requestType)}`, request.url),
+    303,
+  );
 }
 
 interface ExecutionContext {
@@ -29,6 +115,11 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
+    if (url.hostname === "www.rid2caltopo.com") {
+      url.hostname = "rid2caltopo.com";
+      return Response.redirect(url, 301);
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       return handleImageOptimization(request, {
@@ -38,6 +129,16 @@ const worker = {
           return result.response();
         },
       }, allowedWidths);
+    }
+
+    if (url.pathname === "/api/request") {
+      if (request.method !== "POST") {
+        return new Response("Method not allowed", {
+          status: 405,
+          headers: { Allow: "POST" },
+        });
+      }
+      return handleRequestForm(request, env);
     }
 
     return handler.fetch(request, env, ctx);
