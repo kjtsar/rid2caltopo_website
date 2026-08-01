@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
     requestHeaders.get("x-forwarded-proto") ??
     (host.startsWith("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
-  const socialImage = new URL("/og.png", origin).toString();
+  const socialImage = new URL("/og-realtime-tracking.png", origin).toString();
 
   return {
     metadataBase: new URL(origin),
@@ -36,20 +36,22 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Free and managed tools that turn Remote ID observations into useful field awareness for search-and-rescue teams.",
     icons: {
-      icon: "/app-icon.png",
-      shortcut: "/app-icon.png",
-      apple: "/app-icon.png",
+      icon: "/app-icon-orange.png",
+      shortcut: "/app-icon-orange.png",
+      apple: "/app-icon-orange.png",
     },
     openGraph: {
       type: "website",
-      title: "RID2Caltopo — Know where the drones have searched",
+      title:
+        "RID2Caltopo — Real-time tracking of Drone search assignments and what has been searched",
       description:
         "Open tools for Remote ID awareness, CalTopo tracks, and coordinated SAR drone operations.",
       images: [{ url: socialImage, width: 1792, height: 907 }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "RID2Caltopo — Know where the drones have searched",
+      title:
+        "RID2Caltopo — Real-time tracking of Drone search assignments and what has been searched",
       description:
         "Open tools for Remote ID awareness, CalTopo tracks, and coordinated SAR drone operations.",
       images: [socialImage],

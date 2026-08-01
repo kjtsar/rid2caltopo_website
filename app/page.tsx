@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { headers } from "next/headers";
 
 type SiteMode = "community" | "managed";
@@ -16,12 +17,6 @@ const testerLink = (platform: "Android" | "Apple") =>
     `G'day,\n\nI'd like to help test RID2Caltopo on ${platform}.\n\nName:\nOrganization:\nDevice model:\nHow we use drones:\n\nThanks!`,
   )}`;
 
-const managedRequestLink = `mailto:${contactEmail}?subject=${encodeURIComponent(
-  "RID2Caltopo managed tracker interest",
-)}&body=${encodeURIComponent(
-  `G'day,\n\nOur organization is interested in managed r2c-tracker coordination.\n\nOrganization:\nPrimary contact:\nApproximate number of operators/devices:\nWhat would you like RID2Caltopo to help with?\n\nPlease do not include passwords, API keys, or active-incident details.`,
-)}`;
-
 export const metadata: Metadata = {
   title: "RID2Caltopo — Live drone awareness for search and rescue",
   description:
@@ -30,11 +25,10 @@ export const metadata: Metadata = {
 
 const freeCapabilities = [
   "Receive and display ASTM F3411 Remote ID broadcasts",
-  "Record aircraft tracks locally on the phone or tablet",
+  "Record drone tracks locally on the phone or tablet",
   "Publish tracks directly to CalTopo Teams incident maps",
   "Stream controller video locally for squinter review",
   "Capture potential clues and use on-device anomaly assist",
-  "Operate without an r2c-tracker service",
 ];
 
 const managedCapabilities = [
@@ -46,12 +40,12 @@ const managedCapabilities = [
   {
     number: "02",
     title: "Multiple R2C zones per incident",
-    copy: "Coordinate multiple RID2Caltopo tablets and DroneScout Bridges, assign aircraft ownership, relay sightings, and suppress duplicate CalTopo tracks.",
+    copy: "Coordinate multiple RID2Caltopo tablets and DroneScout Bridges, assign drone ownership, relay sightings, and suppress duplicate CalTopo tracks.",
   },
   {
     number: "03",
     title: "BVLOS flight record support",
-    copy: "Retain an organization-wide record of flights, tracks, timestamps, aircraft metadata, and exports to support FAA BVLOS documentation and review.",
+    copy: "Retain an organization-wide record of flights, tracks, timestamps, drone metadata, and exports to support FAA BVLOS documentation and review.",
   },
   {
     number: "04",
@@ -62,19 +56,25 @@ const managedCapabilities = [
 
 const tutorials = [
   {
-    duration: "Field setup",
+    duration: "3 min • Field setup",
     title: "Set up the DroneScout Bridge",
-    copy: "Placement, height, radio range, and keeping the phone or tablet close enough for a reliable link.",
+    copy: "Choose the basic field kit, place the Bridge for useful line of sight, and verify live Remote ID reception before operations.",
+    videoSrc: "/dronescout-bridge-setup.mp4",
+    posterSrc: "/dronescout-bridge-setup-poster.jpg",
   },
   {
     duration: "Configuration",
     title: "Connect RID2Caltopo to CalTopo",
     copy: "Import organization settings, select an incident map, and verify publishing before a mission.",
+    videoSrc: null,
+    posterSrc: null,
   },
   {
     duration: "Operations",
     title: "Run a multi-zone search",
     copy: "Deploy multiple receivers, understand ownership, and recognize a healthy tracker connection.",
+    videoSrc: null,
+    posterSrc: null,
   },
 ];
 
@@ -124,20 +124,20 @@ export default async function Home({ searchParams }: PageProps) {
           <a href="#get-started">Get started</a>
         </nav>
         <div className="edition-switch" aria-label="Website edition">
-          <a
+          <Link
             className={!isManaged ? "active" : ""}
             href="/?view=community"
             aria-current={!isManaged ? "page" : undefined}
           >
             Community
-          </a>
-          <a
+          </Link>
+          <Link
             className={isManaged ? "active" : ""}
             href="/?view=managed"
             aria-current={isManaged ? "page" : undefined}
           >
             Managed
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -149,23 +149,22 @@ export default async function Home({ searchParams }: PageProps) {
               : "Free • Open source • Built for SAR"}
           </p>
           <h1>
-            Know where the
-            <br />
-            <em>drones have searched.</em>
+            Real-time tracking of <em>Drone search assignments</em> and what has
+            been searched.
           </h1>
           <p className="hero-lede">
             RID2Caltopo turns broadcast Remote ID into shared field awareness—
-            helping search teams see aircraft, preserve coverage, and coordinate
+            helping search teams see drones, preserve coverage, and coordinate
             operations from Android, iPhone, and iPad.
           </p>
           <div className="hero-actions">
             {isManaged ? (
               <>
-                <a className="button button-primary" href={managedRequestLink}>
-                  Request managed access <ArrowIcon />
+                <a className="button button-primary" href="/capabilities">
+                  See what&apos;s available <ArrowIcon />
                 </a>
-                <a className="button button-secondary" href="#plans">
-                  See the pilot plan
+                <a className="button button-secondary" href="/tracker">
+                  Understand the tracker
                 </a>
               </>
             ) : (
@@ -192,8 +191,8 @@ export default async function Home({ searchParams }: PageProps) {
         <div className="hero-visual">
           <div className="hero-art-frame">
             <img
-              src="/og.png"
-              alt="RID2CalTopo illustration reading Know where the drones have searched, with two aircraft tracks on a topographic field map"
+              src="/og-realtime-tracking.png"
+              alt="RID2CalTopo illustration showing real-time drone search assignments and two drone tracks on a topographic field map"
             />
           </div>
         </div>
@@ -208,13 +207,13 @@ export default async function Home({ searchParams }: PageProps) {
       <section className="how-it-works section" aria-labelledby="how-title">
         <div className="section-heading">
           <p className="eyebrow">The field link</p>
-          <h2 id="how-title">From aircraft signal to a useful search record.</h2>
+          <h2 id="how-title">From drone signal to a useful search record.</h2>
         </div>
         <div className="signal-flow">
           <article>
             <div className="flow-icon drone-icon" aria-hidden="true">✣</div>
             <p className="step">STEP 01</p>
-            <h3>Aircraft broadcasts</h3>
+            <h3>Drone broadcasts</h3>
             <p>
               Drones used in a SAR mission are required to broadcast ASTM F3411
               Remote ID.
@@ -230,7 +229,7 @@ export default async function Home({ searchParams }: PageProps) {
               <p className="step">STEP 02</p>
               <h3>Bridge receives</h3>
               <p>
-                A raised DroneScout Bridge can receive Remote ID broadcasts over
+                A DroneScout Bridge can receive Remote ID broadcasts over
                 thousands of feet when terrain, line of sight, and radio
                 conditions cooperate.
               </p>
@@ -266,9 +265,9 @@ export default async function Home({ searchParams }: PageProps) {
             <h2>Free app first. Tracker when coordination grows.</h2>
           </div>
           <p>
-            The free app is operational on its own. The optional r2c-tracker
-            adds cross-device coordination and server-side services; it does
-            not unlock the core field tools.
+            RID2Caltopo and a DroneScout Bridge provide the core field tools. An
+            optional <a className="inline-link" href="/tracker">r2c-tracker service</a>{" "}
+            adds cross-device coordination and server-side services.
           </p>
         </div>
         <div className="capability-split">
@@ -281,8 +280,9 @@ export default async function Home({ searchParams }: PageProps) {
               <span className="cap-price">$0</span>
             </div>
             <p className="cap-summary">
-              Install the app, add a Bridge when greater reception is needed,
-              and connect directly to your CalTopo Teams incident map.
+              Install the app, deploy a DroneScout Bridge for reliable
+              Remote ID reception, and connect directly to your CalTopo Teams
+              incident map.
             </p>
             <ul className="capability-list">
               {freeCapabilities.map((capability) => (
@@ -291,6 +291,10 @@ export default async function Home({ searchParams }: PageProps) {
                   {capability}
                 </li>
               ))}
+              <li>
+                <span aria-hidden="true">✓</span>
+                Use the core field tools without an online coordination service
+              </li>
             </ul>
           </article>
           <article className="capability-panel tracker-panel">
@@ -350,9 +354,10 @@ export default async function Home({ searchParams }: PageProps) {
           <p className="eyebrow">Choose your path</p>
           <h2>The app stays free. Coordination is your choice.</h2>
           <p>
-            No tracker is required for local use. Teams that need distributed
-            coordination can host the open service themselves or join the
-            managed pilot.
+            The app and Bridge can work directly with CalTopo. Teams that need
+            distributed coordination can learn about the{" "}
+            <a className="inline-link" href="/tracker">r2c-tracker service</a>,
+            host it themselves, or join the managed pilot.
           </p>
         </div>
         <div className="choice-grid" id="plans">
@@ -399,8 +404,8 @@ export default async function Home({ searchParams }: PageProps) {
               <li>Organization onboarding</li>
               <li>Reasonable-use cloud hosting</li>
             </ul>
-            <a className="button button-card" href={managedRequestLink}>
-              Tell us about your team <ArrowIcon />
+            <a className="button button-card" href="/managed-pilot">
+              Request a managed pilot <ArrowIcon />
             </a>
             <p className="fine-print">
               Starting proposal, not a locked commercial price. Higher-cost
@@ -417,21 +422,42 @@ export default async function Home({ searchParams }: PageProps) {
             <h2>Short tutorials. Real workflows.</h2>
           </div>
           <p>
-            The video library is being prepared alongside the next tester
-            release. These are the first walkthroughs on the production list.
+            Start with the DroneScout Bridge field setup. Configuration and
+            multi-zone operations walkthroughs are next on the production list.
           </p>
         </div>
         <div className="tutorial-grid">
           {tutorials.map((tutorial, index) => (
             <article key={tutorial.title}>
-              <div className="video-placeholder">
-                <span className="play-button" aria-hidden="true">▶</span>
-                <span className="video-index">0{index + 1}</span>
-              </div>
+              {tutorial.videoSrc ? (
+                <video
+                  className="tutorial-video"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={tutorial.posterSrc ?? undefined}
+                  aria-label={`${tutorial.title} video`}
+                >
+                  <source src={tutorial.videoSrc} type="video/mp4" />
+                  Your browser does not support embedded video. You can download
+                  the tutorial from the video controls instead.
+                </video>
+              ) : (
+                <div className="video-placeholder">
+                  <span className="play-button" aria-hidden="true">▶</span>
+                  <span className="video-index">0{index + 1}</span>
+                </div>
+              )}
               <p className="step">{tutorial.duration}</p>
               <h3>{tutorial.title}</h3>
               <p>{tutorial.copy}</p>
-              <span className="coming-soon">Video coming soon</span>
+              {tutorial.videoSrc ? (
+                <a className="watch-now" href={tutorial.videoSrc}>
+                  Watch or download video <ArrowIcon />
+                </a>
+              ) : (
+                <span className="coming-soon">Video coming soon</span>
+              )}
             </article>
           ))}
         </div>
@@ -495,12 +521,12 @@ export default async function Home({ searchParams }: PageProps) {
             <strong>PROJECT</strong>
             <a href="https://github.com/kjtsar/RID2Caltopo">App source</a>
             <a href="https://github.com/kjtsar/r2c-tracker">Tracker source</a>
-            <a href="/?view=community">Community edition</a>
+            <Link href="/?view=community">Community edition</Link>
           </div>
           <div>
             <strong>CONNECT</strong>
             <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-            <a href={managedRequestLink}>Managed pilot</a>
+            <Link href="/managed-pilot">Managed pilot</Link>
             <a href="#testing">Become a tester</a>
           </div>
         </div>

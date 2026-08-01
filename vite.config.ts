@@ -12,8 +12,24 @@ const { d1, r2 } = hostingConfig;
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
+  name: "rid2caltopo-site",
   main: "./worker/index.ts",
+  compatibility_date: "2026-08-01",
   compatibility_flags: ["nodejs_compat"],
+  workers_dev: false,
+  routes: [
+    { pattern: "rid2caltopo.org", custom_domain: true },
+    { pattern: "rid2caltopo.com", custom_domain: true },
+    { pattern: "www.rid2caltopo.com", custom_domain: true },
+  ],
+  observability: { enabled: true },
+  send_email: [
+    {
+      name: "EMAIL",
+      destination_address: "kjtsar@kjt.us",
+      allowed_sender_addresses: ["requests@rid2caltopo.com"],
+    },
+  ],
   d1_databases: d1
     ? [
         {
