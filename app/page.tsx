@@ -70,11 +70,11 @@ const tutorials = [
     posterSrc: "/configure-team-drones-caltopo-teams-poster.jpg",
   },
   {
-    duration: "Operations",
-    title: "Run a multi-zone search",
-    copy: "Deploy multiple receivers, understand ownership, and recognize a healthy tracker connection.",
-    videoSrc: null,
-    posterSrc: null,
+    duration: "5 min • Field video",
+    title: "Stream drone video to RID2Caltopo",
+    copy: "Give a squinter a larger live view, bind video to Remote ID telemetry with the drone designator, and submit picture waypoints to the incident map.",
+    videoSrc: "/stream-drone-video-to-rid2caltopo.mp4",
+    posterSrc: "/stream-drone-video-to-rid2caltopo-poster.jpg",
   },
 ];
 
@@ -431,7 +431,8 @@ export default async function Home({ searchParams }: PageProps) {
           </div>
           <p>
             Start with the DroneScout Bridge field setup, then configure your
-            team drones and CalTopo Teams account. Multi-zone operations are next.
+            team drones and CalTopo Teams account. Finally, connect a controller
+            video stream for squinter-assisted clue searching.
           </p>
         </div>
         <div className="tutorial-grid">

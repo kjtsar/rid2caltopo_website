@@ -52,6 +52,10 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
     /href="https:\/\/gearfocus\.com\/products\/drone-detector-bluemark-ds100-dronescout-retail-bridge-faa-r-79np1"/,
   );
   assert.match(html, /DS100 details and purchase options/);
+  assert.match(html, /Configure team drones and CalTopo Teams account/);
+  assert.match(html, /src="\/configure-team-drones-caltopo-teams\.mp4"/);
+  assert.match(html, /Stream drone video to RID2Caltopo/);
+  assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
   assert.match(html, /rel="icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.match(html, /rel="apple-touch-icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.doesNotMatch(html, /\baircraft\b/i);
