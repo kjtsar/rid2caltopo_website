@@ -106,6 +106,8 @@ test("keeps public copy drone-specific and ships correctly sized artwork", async
 
   assert.doesNotMatch(publicCopy, /\baircraft\b/i);
   assert.doesNotMatch(publicCopy, /Know where the drones have searched/i);
+  assert.doesNotMatch(publicCopy, /\$100|100\/year/i);
+  assert.match(publicCopy, /Pricing TBD|after pilot usage review/);
   assert.doesNotMatch(
     publicCopy,
     /Real-time tracking of Drone search assignments and what has been searched/i,

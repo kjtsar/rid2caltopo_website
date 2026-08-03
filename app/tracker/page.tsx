@@ -6,7 +6,7 @@ const contactEmail = "kjtstar@kjt.us";
 export const metadata: Metadata = {
   title: "r2c-tracker service",
   description:
-    "Understand r2c-tracker incident coordination and compare self-hosted software with the $100/year managed founding pilot.",
+    "Understand r2c-tracker incident coordination and compare self-hosted software with the managed founding pilot.",
   alternates: { canonical: "/tracker" },
 };
 
@@ -62,11 +62,11 @@ export default function TrackerPage() {
           </article>
           <article className="featured-price">
             <span className="choice-label">FOUNDING PILOT</span>
-            <p className="tracker-price">$100 <small>/ organization / year</small></p>
+            <p className="tracker-price">TBD <small>after pilot usage review</small></p>
             <h3>Managed for your team.</h3>
             <p>We host and administer the tracker for volunteer organizations, provide onboarding, and include reasonable-use cloud operation so your team can focus on missions.</p>
             <a className="button button-primary" href="/managed-pilot">Request the managed pilot <span aria-hidden="true">→</span></a>
-            <p className="fine-print">Starting proposal, not a locked commercial price. Higher-cost services would be transparent and optional.</p>
+            <p className="fine-print">We&apos;re inviting early organizations to try the managed service while we measure normal cloud and administration costs. Any future price will be discussed before charges begin.</p>
           </article>
         </div>
         <p className="pricing-note">

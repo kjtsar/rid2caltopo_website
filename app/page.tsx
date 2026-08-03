@@ -397,7 +397,7 @@ export default async function Home({ searchParams }: PageProps) {
           <article className={isManaged ? "featured managed-plan" : "managed-plan"}>
             <div className="choice-top">
               <span className="choice-label">FOUNDING PILOT</span>
-              <span className="price">$100 <small>/ organization / year</small></span>
+              <span className="price">TBD <small>after pilot usage review</small></span>
             </div>
             <h3>Let us handle the tracker.</h3>
             <p>
@@ -417,8 +417,9 @@ export default async function Home({ searchParams }: PageProps) {
               Request a managed pilot <ArrowIcon />
             </a>
             <p className="fine-print">
-              Starting proposal, not a locked commercial price. Higher-cost
-              services would be transparent and optional.
+              We&apos;re inviting early organizations to try the managed service
+              while we measure normal cloud and administration costs. Any
+              future price will be discussed before charges begin.
             </p>
           </article>
         </div>
