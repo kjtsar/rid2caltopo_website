@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CalTopoTeamsText } from "../components/CalTopoTeamsLink";
 
 export const metadata: Metadata = {
   title: "Capabilities",
@@ -61,7 +62,9 @@ export default function CapabilitiesPage() {
             publish directly to the team&apos;s CalTopo incident map.
           </p>
           <ul className="info-list">
-            {fieldCapabilities.map((capability) => <li key={capability}>{capability}</li>)}
+            {fieldCapabilities.map((capability) => (
+              <li key={capability}><CalTopoTeamsText text={capability} /></li>
+            ))}
           </ul>
           <Link className="button button-secondary" href="/early-access">
             Request early access to the app <span aria-hidden="true">→</span>
@@ -91,10 +94,9 @@ export default function CapabilitiesPage() {
       <section className="status-band">
         <strong>Current qualification</strong>
         <p>
-          Pilot-authorized IC video is available on iOS; Android support is in
-          progress. Some external-radio workflows still require physical-device
-          qualification. Planned work is identified as planned—not presented as
-          field-ready.
+          Pilot-authorized IC video is available on iOS and Android. Some
+          external-radio workflows still require physical-device qualification.
+          Planned work is identified as planned—not presented as field-ready.
         </p>
       </section>
 

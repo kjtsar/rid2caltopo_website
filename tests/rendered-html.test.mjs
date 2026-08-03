@@ -28,6 +28,20 @@ async function render(host = "rid2caltopo.org", path = "/") {
   );
 }
 
+function assertEveryVisibleCalTopoTeamsMentionIsLinked(html) {
+  const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/)?.[1] ?? "";
+  const visibleMarkup = body
+    .replace(/<script[\s\S]*?<\/script>/g, "")
+    .replace(/\saria-label="[^"]*"/g, "");
+  const mentions = visibleMarkup.match(/CalTopo Teams/g) ?? [];
+  const links = visibleMarkup.match(
+    /<a[^>]+href="https:\/\/caltopo\.com\/about\/teams\/"[^>]*>CalTopo Teams<\/a>/g,
+  ) ?? [];
+
+  assert.ok(mentions.length > 0);
+  assert.equal(mentions.length, links.length);
+}
+
 test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   const response = await render();
   assert.equal(response.status, 200);
@@ -52,7 +66,11 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
     /href="https:\/\/gearfocus\.com\/products\/drone-detector-bluemark-ds100-dronescout-retail-bridge-faa-r-79np1"/,
   );
   assert.match(html, /DS100 details and purchase options/);
-  assert.match(html, /Configure team drones and CalTopo Teams account/);
+  assert.match(
+    html,
+    /href="https:\/\/caltopo\.com\/about\/teams\/"[^>]*>CalTopo Teams<\/a>/,
+  );
+  assertEveryVisibleCalTopoTeamsMentionIsLinked(html);
   assert.match(html, /src="\/configure-team-drones-caltopo-teams\.mp4"/);
   assert.match(html, /Stream drone video to RID2Caltopo/);
   assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
@@ -61,6 +79,8 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /rel="canonical" href="https:\/\/rid2caltopo\.org\/"/);
   assert.match(html, /"@type":"WebSite","name":"RID2Caltopo"/);
   assert.match(html, /"@type":"SoftwareApplication","name":"RID2Caltopo"/);
+  assert.match(html, /href="mailto:kjtsar@kjt\.us">kjtsar@kjt\.us<\/a>/);
+  assert.doesNotMatch(html, /kjtstar@kjt\.us/);
   assert.doesNotMatch(html, /\baircraft\b/i);
   assert.doesNotMatch(html, /Know where the drones have searched/i);
 });
@@ -94,6 +114,12 @@ test("publishes host-specific robots and sitemap discovery", async () => {
   assert.doesNotMatch(comXml, /rid2caltopo\.org/);
 });
 
+test("links every visible CalTopo Teams mention on the capabilities page", async () => {
+  const response = await render("rid2caltopo.com", "/capabilities");
+  assert.equal(response.status, 200);
+  assertEveryVisibleCalTopoTeamsMentionIsLinked(await response.text());
+});
+
 test("keeps public copy drone-specific and ships correctly sized artwork", async () => {
   const appRoot = new URL("../app/", import.meta.url);
   const appFiles = await readdir(appRoot, { recursive: true });
@@ -107,7 +133,12 @@ test("keeps public copy drone-specific and ships correctly sized artwork", async
   assert.doesNotMatch(publicCopy, /\baircraft\b/i);
   assert.doesNotMatch(publicCopy, /Know where the drones have searched/i);
   assert.doesNotMatch(publicCopy, /\$100|100\/year/i);
-  assert.match(publicCopy, /Pricing TBD|after pilot usage review/);
+  assert.match(publicCopy, /Pricing \$TBD|after pilot usage review/);
+  assert.match(publicCopy, /MANAGED PILOT • AVAILABLE ON IOS AND ANDROID/);
+  assert.match(publicCopy, /The feed begins only after approval in the RID2Caltopo app\./);
+  assert.match(publicCopy, /mailto:\$\{contactEmail\}/);
+  assert.match(publicCopy, /const contactEmail = "kjtsar@kjt\.us"/);
+  assert.doesNotMatch(publicCopy, /kjtstar@kjt\.us|Founding pilot|Android support is in progress|Built honestly/i);
   assert.doesNotMatch(
     publicCopy,
     /Real-time tracking of Drone search assignments and what has been searched/i,

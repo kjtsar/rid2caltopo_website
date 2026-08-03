@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
+import { CalTopoTeamsLink, CalTopoTeamsText } from "./components/CalTopoTeamsLink";
 
 type SiteMode = "community" | "managed";
 
@@ -8,7 +9,7 @@ type PageProps = {
   searchParams?: Promise<{ view?: string }>;
 };
 
-const contactEmail = "kjtstar@kjt.us";
+const contactEmail = "kjtsar@kjt.us";
 
 const testerLink = (platform: "Android" | "Apple") =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(
@@ -250,7 +251,8 @@ export default async function Home({ searchParams }: PageProps) {
             <p className="step">STEP 03</p>
             <h3>RID2Caltopo records</h3>
             <p>
-              RID2Caltopo records tracks locally and directly to CalTopo Teams
+              RID2Caltopo records tracks locally and directly to{" "}
+              <CalTopoTeamsLink />{" "}
               incident maps.
             </p>
           </article>
@@ -290,14 +292,14 @@ export default async function Home({ searchParams }: PageProps) {
             </div>
             <p className="cap-summary">
               Install the app, deploy a DroneScout Bridge for reliable
-              Remote ID reception, and connect directly to your CalTopo Teams
-              incident map.
+              Remote ID reception, and connect directly to your{" "}
+              <CalTopoTeamsLink /> incident map.
             </p>
             <ul className="capability-list">
               {freeCapabilities.map((capability) => (
                 <li key={capability}>
                   <span aria-hidden="true">✓</span>
-                  {capability}
+                  <CalTopoTeamsText text={capability} />
                 </li>
               ))}
               <li>
@@ -315,7 +317,7 @@ export default async function Home({ searchParams }: PageProps) {
               <span className="cap-adds">STARTER</span>
             </div>
             <p className="cap-summary">
-              The founding managed service starts with three practical needs.
+              The managed pilot starts with three practical needs.
               Organizations can still self-host the open tracker instead.
             </p>
             <ol className="managed-feature-list">
@@ -330,12 +332,11 @@ export default async function Home({ searchParams }: PageProps) {
               ))}
             </ol>
             <div className="planned-extension available-extension">
-              <span>FOUNDING PILOT • AVAILABLE ON IOS</span>
+              <span>MANAGED PILOT • AVAILABLE ON IOS AND ANDROID</span>
               <strong>Pilot-authorized live video for Incident Command</strong>
               <p>
                 IC may request temporary access when direct oversight is needed.
-                The feed begins only after approval on the RID2Caltopo tablet.
-                Android support is in progress.
+                The feed begins only after approval in the RID2Caltopo app.
               </p>
             </div>
             <p className="compliance-note">
@@ -347,14 +348,6 @@ export default async function Home({ searchParams }: PageProps) {
               </a>
             </p>
           </article>
-        </div>
-        <div className="qualification-note">
-          <strong>Built honestly.</strong>
-          <span>
-            Android IC streaming and some external-radio workflows remain under
-            implementation or physical-device qualification. We publish testing
-            status instead of presenting incomplete evidence as field readiness.
-          </span>
         </div>
       </section>
 
@@ -396,8 +389,8 @@ export default async function Home({ searchParams }: PageProps) {
 
           <article className={isManaged ? "featured managed-plan" : "managed-plan"}>
             <div className="choice-top">
-              <span className="choice-label">FOUNDING PILOT</span>
-              <span className="price">TBD <small>after pilot usage review</small></span>
+              <span className="choice-label">MANAGED PILOT</span>
+              <span className="price">$TBD <small>after pilot usage review</small></span>
             </div>
             <h3>Let us handle the tracker.</h3>
             <p>
@@ -433,8 +426,8 @@ export default async function Home({ searchParams }: PageProps) {
           </div>
           <p>
             Start with the DroneScout Bridge field setup, then configure your
-            team drones and CalTopo Teams account. Finally, connect a controller
-            video stream for squinter-assisted clue searching.
+            team drones and <CalTopoTeamsLink /> account. Finally, connect a
+            controller video stream for squinter-assisted clue searching.
           </p>
         </div>
         <div className="tutorial-grid">
@@ -460,8 +453,8 @@ export default async function Home({ searchParams }: PageProps) {
                 </div>
               )}
               <p className="step">{tutorial.duration}</p>
-              <h3>{tutorial.title}</h3>
-              <p>{tutorial.copy}</p>
+              <h3><CalTopoTeamsText text={tutorial.title} /></h3>
+              <p><CalTopoTeamsText text={tutorial.copy} /></p>
               {tutorial.videoSrc ? (
                 <a className="watch-now" href={tutorial.videoSrc}>
                   Watch or download video <ArrowIcon />

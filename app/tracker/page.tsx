@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const contactEmail = "kjtstar@kjt.us";
+const contactEmail = "kjtsar@kjt.us";
 
 export const metadata: Metadata = {
   title: "r2c-tracker service",
   description:
-    "Understand r2c-tracker incident coordination and compare self-hosted software with the managed founding pilot.",
+    "Understand r2c-tracker incident coordination and compare self-hosted software with the managed pilot.",
   alternates: { canonical: "/tracker" },
 };
 
@@ -61,8 +61,8 @@ export default function TrackerPage() {
             <a className="button button-card" href="https://github.com/kjtsar/r2c-tracker">Open the source repository <span aria-hidden="true">↗</span></a>
           </article>
           <article className="featured-price">
-            <span className="choice-label">FOUNDING PILOT</span>
-            <p className="tracker-price">TBD <small>after pilot usage review</small></p>
+            <span className="choice-label">MANAGED PILOT</span>
+            <p className="tracker-price">$TBD <small>after pilot usage review</small></p>
             <h3>Managed for your team.</h3>
             <p>We host and administer the tracker for volunteer organizations, provide onboarding, and include reasonable-use cloud operation so your team can focus on missions.</p>
             <a className="button button-primary" href="/managed-pilot">Request the managed pilot <span aria-hidden="true">→</span></a>
@@ -71,7 +71,7 @@ export default function TrackerPage() {
         </div>
         <p className="pricing-note">
           Cloud video storage, playback, and other bandwidth- or storage-heavy
-          services are not included in the founding plan. If added, they would
+          services are not included in the managed pilot. If added, they would
           be a separate optional tier with clear costs.
         </p>
       </section>

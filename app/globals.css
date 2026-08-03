@@ -649,29 +649,6 @@ h1 em {
   text-underline-offset: 3px;
 }
 
-.qualification-note {
-  align-items: flex-start;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  display: grid;
-  gap: 50px;
-  grid-template-columns: 140px 1fr;
-  padding: 26px 0;
-}
-
-.qualification-note strong {
-  color: #f5a17c;
-  font-family: var(--font-plex-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.qualification-note span {
-  color: #b7c4b8;
-  line-height: 1.55;
-  max-width: 900px;
-}
-
 .choice-section {
   background: var(--cream);
 }
@@ -1175,11 +1152,6 @@ footer {
   .capability-panel {
     min-height: auto;
     padding: 28px 22px;
-  }
-
-  .qualification-note {
-    gap: 15px;
-    grid-template-columns: 1fr;
   }
 
   .choice-grid article {
