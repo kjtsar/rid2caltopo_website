@@ -561,12 +561,18 @@ h1 em {
   color: #d8e2d9;
 }
 
-.capability-list li > span {
+.capability-list .capability-check {
   color: var(--orange-dark);
   font-weight: 800;
 }
 
-.tracker-panel .capability-list li > span {
+.capability-list .capability-copy {
+  color: inherit;
+  font-weight: inherit;
+  min-width: 0;
+}
+
+.tracker-panel .capability-list .capability-check {
   color: #f5a17c;
 }
 
@@ -1009,6 +1015,30 @@ footer {
 .footer-links a {
   color: #d7e1d8;
   font-size: 14px;
+}
+
+.email-contact {
+  align-items: baseline;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.email-contact button {
+  background: none;
+  border: 0;
+  color: #9fb0a1;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.email-contact button:hover,
+.email-contact button:focus-visible {
+  color: #f5a17c;
 }
 
 .footer-bottom {
@@ -1604,6 +1634,13 @@ footer {
 
 .info-footer a {
   color: #f5a17c;
+}
+
+.info-contact {
+  align-items: baseline;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 @media (max-width: 800px) {

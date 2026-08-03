@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { EmailContact } from "../components/EmailContact";
 
 const contactEmail = "kjtsar@kjt.us";
 
@@ -78,7 +79,7 @@ export default function TrackerPage() {
 
       <footer className="info-footer">
         <a href="/capabilities">← Review all capabilities</a>
-        <span>Questions? <a href={`mailto:${contactEmail}`}>{contactEmail}</a></span>
+        <span className="info-contact">Questions? <EmailContact email={contactEmail} /></span>
       </footer>
     </main>
   );

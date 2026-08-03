@@ -14,7 +14,7 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 const localBindingConfig = {
   name: "rid2caltopo-site",
   main: "./worker/index.ts",
-  compatibility_date: "2026-08-01",
+  compatibility_date: "2026-05-22",
   compatibility_flags: ["nodejs_compat"],
   workers_dev: false,
   routes: [

@@ -80,6 +80,7 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /"@type":"WebSite","name":"RID2Caltopo"/);
   assert.match(html, /"@type":"SoftwareApplication","name":"RID2Caltopo"/);
   assert.match(html, /href="mailto:kjtsar@kjt\.us">kjtsar@kjt\.us<\/a>/);
+  assert.match(html, />Copy address<\/button>/);
   assert.doesNotMatch(html, /kjtstar@kjt\.us/);
   assert.doesNotMatch(html, /\baircraft\b/i);
   assert.doesNotMatch(html, /Know where the drones have searched/i);

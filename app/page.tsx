@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { CalTopoTeamsLink, CalTopoTeamsText } from "./components/CalTopoTeamsLink";
+import { EmailContact } from "./components/EmailContact";
 
 type SiteMode = "community" | "managed";
 
@@ -298,8 +299,10 @@ export default async function Home({ searchParams }: PageProps) {
             <ul className="capability-list">
               {freeCapabilities.map((capability) => (
                 <li key={capability}>
-                  <span aria-hidden="true">✓</span>
-                  <CalTopoTeamsText text={capability} />
+                  <span className="capability-check" aria-hidden="true">✓</span>
+                  <span className="capability-copy">
+                    <CalTopoTeamsText text={capability} />
+                  </span>
                 </li>
               ))}
               <li>
@@ -529,7 +532,7 @@ export default async function Home({ searchParams }: PageProps) {
           </div>
           <div>
             <strong>CONNECT</strong>
-            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+            <EmailContact email={contactEmail} />
             <Link href="/managed-pilot">Managed pilot</Link>
             <a href="#testing">Become a tester</a>
           </div>
