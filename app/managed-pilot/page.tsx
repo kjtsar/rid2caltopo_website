@@ -5,6 +5,7 @@ import RequestForm from "../components/RequestForm";
 export const metadata: Metadata = {
   title: "Request the managed pilot",
   description: "Request the $100/year managed r2c-tracker founding pilot.",
+  alternates: { canonical: "/managed-pilot" },
 };
 
 export default function ManagedPilotPage() {

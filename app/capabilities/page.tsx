@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Capabilities",
   description:
     "Compare RID2Caltopo field capabilities with self-hosted and managed r2c-tracker coordination.",
+  alternates: { canonical: "/capabilities" },
 };
 
 const fieldCapabilities = [

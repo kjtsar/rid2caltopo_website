@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "r2c-tracker service",
   description:
     "Understand r2c-tracker incident coordination and compare self-hosted software with the $100/year managed founding pilot.",
+  alternates: { canonical: "/tracker" },
 };
 
 export default function TrackerPage() {

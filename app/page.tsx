@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: "RID2Caltopo — Track drone assignments and search coverage in real time",
   description:
     "Free and managed tools that turn Remote ID observations into useful field awareness for search-and-rescue teams.",
+  alternates: { canonical: "/" },
 };
 
 const freeCapabilities = [

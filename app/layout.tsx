@@ -3,6 +3,17 @@ import { Barlow, IBM_Plex_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 
+function canonicalHost(requestHeaders: Headers): string {
+  const candidate = (
+    requestHeaders.get("x-forwarded-host") ??
+    requestHeaders.get("host") ??
+    ""
+  ).toLowerCase();
+  return candidate === "rid2caltopo.com" || candidate === "www.rid2caltopo.com"
+    ? "rid2caltopo.com"
+    : "rid2caltopo.org";
+}
+
 const barlow = Barlow({
   variable: "--font-barlow",
   subsets: ["latin"],
@@ -17,14 +28,8 @@ const plexMono = IBM_Plex_Mono({
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
-  const host =
-    requestHeaders.get("x-forwarded-host") ??
-    requestHeaders.get("host") ??
-    "rid2caltopo.org";
-  const protocol =
-    requestHeaders.get("x-forwarded-proto") ??
-    (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
+  const host = canonicalHost(requestHeaders);
+  const origin = `https://${host}`;
   const socialImage = new URL("/og-assignment-coverage.png", origin).toString();
 
   return {
@@ -36,6 +41,14 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description:
       "Free and managed tools that turn Remote ID observations into useful field awareness for search-and-rescue teams.",
+    applicationName: "RID2Caltopo",
+    creator: "RID2Caltopo",
+    publisher: "RID2Caltopo",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true },
+    },
     icons: {
       icon: "/app-icon-orange.png",
       shortcut: "/app-icon-orange.png",
@@ -60,14 +73,43 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const origin = `https://${canonicalHost(requestHeaders)}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "RID2Caltopo",
+        url: origin,
+        description:
+          "Track drone assignments and search coverage in real time for search-and-rescue operations.",
+      },
+      {
+        "@type": "SoftwareApplication",
+        name: "RID2Caltopo",
+        url: origin,
+        applicationCategory: "UtilitiesApplication",
+        operatingSystem: "Android, iOS",
+        isAccessibleForFree: true,
+        codeRepository: "https://github.com/kjtsar/RID2Caltopo",
+        description:
+          "Remote ID field awareness, CalTopo track publishing, and drone search coordination for search-and-rescue teams.",
+      },
+    ],
+  };
   return (
     <html lang="en">
       <body className={`${barlow.variable} ${plexMono.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         {children}
       </body>
     </html>

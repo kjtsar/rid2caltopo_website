@@ -2,13 +2,13 @@ import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import test from "node:test";
 
-async function render(host = "rid2caltopo.org") {
+async function render(host = "rid2caltopo.org", path = "/") {
   const workerUrl = new URL("../dist/server/index.js", import.meta.url);
   workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
   const { default: worker } = await import(workerUrl.href);
 
   return worker.fetch(
-    new Request("https://localhost/", {
+    new Request(`https://${host}${path}`, {
       headers: {
         accept: "text/html",
         host,
@@ -58,8 +58,40 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
   assert.match(html, /rel="icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.match(html, /rel="apple-touch-icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
+  assert.match(html, /rel="canonical" href="https:\/\/rid2caltopo\.org\/"/);
+  assert.match(html, /"@type":"WebSite","name":"RID2Caltopo"/);
+  assert.match(html, /"@type":"SoftwareApplication","name":"RID2Caltopo"/);
   assert.doesNotMatch(html, /\baircraft\b/i);
   assert.doesNotMatch(html, /Know where the drones have searched/i);
+});
+
+test("publishes host-specific robots and sitemap discovery", async () => {
+  const [comRobots, orgSitemap, comSitemap] = await Promise.all([
+    render("rid2caltopo.com", "/robots.txt"),
+    render("rid2caltopo.org", "/sitemap.xml"),
+    render("rid2caltopo.com", "/sitemap.xml"),
+  ]);
+
+  assert.equal(comRobots.status, 200);
+  assert.match(comRobots.headers.get("content-type") ?? "", /^text\/plain\b/i);
+  assert.match(
+    await comRobots.text(),
+    /Sitemap: https:\/\/rid2caltopo\.com\/sitemap\.xml/,
+  );
+
+  assert.equal(orgSitemap.status, 200);
+  assert.match(
+    orgSitemap.headers.get("content-type") ?? "",
+    /^application\/xml\b/i,
+  );
+  const orgXml = await orgSitemap.text();
+  assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/<\/loc>/);
+  assert.doesNotMatch(orgXml, /rid2caltopo\.com/);
+
+  assert.equal(comSitemap.status, 200);
+  const comXml = await comSitemap.text();
+  assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tracker<\/loc>/);
+  assert.doesNotMatch(comXml, /rid2caltopo\.org/);
 });
 
 test("keeps public copy drone-specific and ships correctly sized artwork", async () => {

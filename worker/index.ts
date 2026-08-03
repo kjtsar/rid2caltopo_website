@@ -24,6 +24,62 @@ interface Env {
 }
 
 const notificationAddress = "kjtsar@kjt.us";
+const indexablePaths = [
+  "/",
+  "/capabilities",
+  "/tracker",
+  "/early-access",
+  "/managed-pilot",
+];
+
+function publicOrigin(url: URL): string {
+  return url.hostname === "rid2caltopo.org"
+    ? "https://rid2caltopo.org"
+    : "https://rid2caltopo.com";
+}
+
+function robotsResponse(url: URL): Response {
+  const origin = publicOrigin(url);
+  return new Response(
+    [
+      "User-agent: *",
+      "Allow: /",
+      "Disallow: /api/",
+      "Disallow: /request-error",
+      "Disallow: /request-received",
+      `Sitemap: ${origin}/sitemap.xml`,
+      "",
+    ].join("\n"),
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        "Content-Type": "text/plain; charset=utf-8",
+      },
+    },
+  );
+}
+
+function sitemapResponse(url: URL): Response {
+  const origin = publicOrigin(url);
+  const entries = indexablePaths
+    .map((path) => `  <url><loc>${origin}${path}</loc></url>`)
+    .join("\n");
+  return new Response(
+    [
+      '<?xml version="1.0" encoding="UTF-8"?>',
+      '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+      entries,
+      "</urlset>",
+      "",
+    ].join("\n"),
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        "Content-Type": "application/xml; charset=utf-8",
+      },
+    },
+  );
+}
 
 function cleanField(value: FormDataEntryValue | null, maxLength: number): string {
   return typeof value === "string"
@@ -118,6 +174,14 @@ const worker = {
     if (url.hostname === "www.rid2caltopo.com") {
       url.hostname = "rid2caltopo.com";
       return Response.redirect(url, 301);
+    }
+
+    if (url.pathname === "/robots.txt") {
+      return robotsResponse(url);
+    }
+
+    if (url.pathname === "/sitemap.xml") {
+      return sitemapResponse(url);
     }
 
     if (url.pathname === "/_vinext/image") {

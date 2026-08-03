@@ -5,6 +5,7 @@ import RequestForm from "../components/RequestForm";
 export const metadata: Metadata = {
   title: "Request early app access",
   description: "Request early access to RID2Caltopo for Android or iOS.",
+  alternates: { canonical: "/early-access" },
 };
 
 export default function EarlyAccessPage() {
