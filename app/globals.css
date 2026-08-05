@@ -1712,6 +1712,17 @@ footer {
   line-height: 1.65;
 }
 
+.organization-link {
+  color: inherit;
+  text-decoration-color: var(--orange-dark);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.organization-link:hover {
+  color: var(--orange-dark);
+}
+
 .donation-action {
   background: var(--paper);
   border: 3px solid var(--orange);

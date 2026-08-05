@@ -98,7 +98,18 @@ export default function DonationsPage() {
       <section className="info-section donation-funding">
         <div className="funding-copy">
           <p className="eyebrow">Where contributions go</p>
-          <h2>Development first. NCSSAR next.</h2>
+          <h2>
+            Development first.{" "}
+            <a
+              className="organization-link"
+              href="https://nevadacountysar.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              NCSSAR
+            </a>{" "}
+            next.
+          </h2>
           <p>
             Contributions initially offset project development expenses,
             including the tools and AI resources used to design, implement,
@@ -107,8 +118,25 @@ export default function DonationsPage() {
           <p>
             As the user base grows, managed-service usage payments are intended
             to cover operating costs. After development costs are covered, any
-            additional donations will go to our local Nevada County Sheriff&apos;s
-            Search and Rescue organization, NCSSAR.
+            additional donations will go to our local{" "}
+            <a
+              className="organization-link"
+              href="https://nevadacountysar.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Nevada County Sheriff&apos;s Search and Rescue
+            </a>{" "}
+            organization, the{" "}
+            <a
+              className="organization-link"
+              href="https://nevadacountysar.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              NCSSAR
+            </a>
+            .
           </p>
         </div>
         <aside className="donation-action" aria-label="Make a voluntary contribution">

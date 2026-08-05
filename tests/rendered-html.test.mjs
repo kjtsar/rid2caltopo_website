@@ -135,8 +135,14 @@ test("explains project history and donation priorities before opening PayPal", a
   assert.match(html, /converted drone tracks to GeoJSON for import into CalTopo/);
   assert.match(html, /many hundreds of hours/);
   assert.match(html, /hundreds of dollars on AI tokens/);
-  assert.match(html, /Development first\. NCSSAR next\./);
-  assert.match(html, /additional donations will go to our local Nevada County Sheriff/);
+  assert.match(html, /Development first\./);
+  assert.match(html, /NCSSAR/);
+  assert.match(html, /additional donations will go to our local/);
+  assert.match(html, /Nevada County Sheriff&#x27;s Search and Rescue/);
+  assert.equal(
+    html.match(/href="https:\/\/nevadacountysar\.org\/"/g)?.length,
+    3,
+  );
   assert.match(
     html,
     /href="https:\/\/paypal\.me\/kjtgv"[^>]*target="_blank"[^>]*rel="noreferrer"/,
