@@ -77,11 +77,9 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /href="\/tips">Tips &amp; tricks<\/a>/);
   assert.match(html, /<strong>Community-supported\.<\/strong>/);
   assert.match(html, /Contributions do not\s*purchase access or priority\./);
-  assert.match(
-    html,
-    /href="https:\/\/paypal\.me\/kjtgv"[^>]*target="_blank"[^>]*rel="noreferrer"/,
-  );
+  assert.match(html, /href="\/donations"/);
   assert.match(html, /Support the project/);
+  assert.doesNotMatch(html, /href="https:\/\/paypal\.me\/kjtgv"/);
   assert.doesNotMatch(html, /tax[- ]deductible/i);
   assert.match(html, /rel="icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.match(html, /rel="apple-touch-icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
@@ -117,13 +115,33 @@ test("publishes host-specific robots and sitemap discovery", async () => {
   const orgXml = await orgSitemap.text();
   assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/<\/loc>/);
   assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/tips<\/loc>/);
+  assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/donations<\/loc>/);
   assert.doesNotMatch(orgXml, /rid2caltopo\.com/);
 
   assert.equal(comSitemap.status, 200);
   const comXml = await comSitemap.text();
   assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tracker<\/loc>/);
   assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tips<\/loc>/);
+  assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/donations<\/loc>/);
   assert.doesNotMatch(comXml, /rid2caltopo\.org/);
+});
+
+test("explains project history and donation priorities before opening PayPal", async () => {
+  const response = await render("rid2caltopo.com", "/donations");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /began a little over a year ago as a Python script/);
+  assert.match(html, /converted drone tracks to GeoJSON for import into CalTopo/);
+  assert.match(html, /many hundreds of hours/);
+  assert.match(html, /hundreds of dollars on AI tokens/);
+  assert.match(html, /Development first\. NCSSAR next\./);
+  assert.match(html, /additional donations will go to our local Nevada County Sheriff/);
+  assert.match(
+    html,
+    /href="https:\/\/paypal\.me\/kjtgv"[^>]*target="_blank"[^>]*rel="noreferrer"/,
+  );
+  assert.match(html, /No charitable tax receipt is offered/);
 });
 
 test("publishes field tips for the shared Android and iOS workflow", async () => {

@@ -130,14 +130,9 @@ export default async function Home({ searchParams }: PageProps) {
           development, hosting, and administration. Contributions do not
           purchase access or priority.
         </p>
-        <a
-          href="https://paypal.me/kjtgv"
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Support RID2Caltopo through PayPal.Me"
-        >
-          Support the project <span aria-hidden="true">↗</span>
-        </a>
+        <Link href="/donations" aria-label="Learn how contributions support RID2Caltopo">
+          Support the project <span aria-hidden="true">→</span>
+        </Link>
       </aside>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="RID2Caltopo home">

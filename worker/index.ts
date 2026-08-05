@@ -30,6 +30,7 @@ const indexablePaths = [
   "/capabilities",
   "/tracker",
   "/tips",
+  "/donations",
   "/early-access",
   "/managed-pilot",
 ];

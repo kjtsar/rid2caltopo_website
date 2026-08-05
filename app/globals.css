@@ -1631,6 +1631,108 @@ footer {
   gap: 5px;
 }
 
+/* Donations */
+.donations-hero {
+  background-color: var(--cream);
+}
+
+.donation-history {
+  display: grid;
+  gap: clamp(36px, 7vw, 110px);
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+}
+
+.donation-history h2,
+.donation-directives h2,
+.donation-funding h2 {
+  font-size: clamp(38px, 4vw, 62px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.donation-story {
+  border-top: 3px solid var(--orange);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.65;
+  padding-top: 28px;
+}
+
+.donation-story p:first-child {
+  margin-top: 0;
+}
+
+.donation-directives {
+  background: var(--forest-deep);
+  color: white;
+}
+
+.directive-grid {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 54px;
+}
+
+.directive-grid article {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: clamp(24px, 3vw, 40px);
+}
+
+.directive-grid span,
+.donation-action > span {
+  color: #f5a17c;
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.directive-grid h3 {
+  font-size: 24px;
+  margin: 34px 0 14px;
+}
+
+.directive-grid p {
+  color: #b7c4b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.donation-funding {
+  align-items: start;
+  background: var(--cream);
+  display: grid;
+  gap: clamp(36px, 7vw, 110px);
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+}
+
+.funding-copy > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.donation-action {
+  background: var(--paper);
+  border: 3px solid var(--orange);
+  box-shadow: 14px 14px 0 rgba(24, 59, 43, 0.14);
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.donation-action h3 {
+  font-size: 30px;
+  margin: 28px 0 14px;
+}
+
+.donation-action p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.donation-action .button {
+  margin-top: 18px;
+}
+
 /* Field tips */
 .tips-hero {
   background-color: var(--cream);
@@ -1767,10 +1869,13 @@ footer {
 @media (max-width: 800px) {
   .capability-overview,
   .mechanics-grid,
+  .donation-history,
+  .donation-funding,
   .pricing-grid {
     grid-template-columns: 1fr;
   }
 
+  .directive-grid,
   .tips-index,
   .tips-grid {
     grid-template-columns: 1fr;
