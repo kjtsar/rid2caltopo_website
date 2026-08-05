@@ -126,15 +126,6 @@ export default function DonationsPage() {
               rel="noreferrer"
             >
               Nevada County Sheriff&apos;s Search and Rescue
-            </a>{" "}
-            organization, the{" "}
-            <a
-              className="organization-link"
-              href="https://nevadacountysar.org/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              NCSSAR
             </a>
             .
           </p>

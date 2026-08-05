@@ -73,6 +73,8 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assertEveryVisibleCalTopoTeamsMentionIsLinked(html);
   assert.match(html, /src="\/configure-team-drones-caltopo-teams\.mp4"/);
   assert.match(html, /Stream drone video to RID2Caltopo/);
+  assert.match(html, /Administer an organization site/);
+  assert.match(html, /organization-site-administration\.mp4/);
   assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
   assert.match(html, /href="\/tips">Tips &amp; tricks<\/a>/);
   assert.match(html, /<strong>Community-supported\.<\/strong>/);
@@ -141,7 +143,7 @@ test("explains project history and donation priorities before opening PayPal", a
   assert.match(html, /Nevada County Sheriff&#x27;s Search and Rescue/);
   assert.equal(
     html.match(/href="https:\/\/nevadacountysar\.org\/"/g)?.length,
-    3,
+    2,
   );
   assert.match(
     html,

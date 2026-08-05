@@ -86,6 +86,13 @@ const tutorials = [
     videoSrc: "/prepare-mutual-aid-package.mp4?rev=20260804-dem-device",
     posterSrc: "/prepare-mutual-aid-package-poster.jpg?rev=20260804-dem-device",
   },
+  {
+    duration: "5 min • Site administration",
+    title: "Administer an organization site",
+    copy: "Activate a new site administrator, set privacy and retention, monitor service status, delegate member roles, enroll field devices, and manage flight records.",
+    videoSrc: "/organization-site-administration.mp4",
+    posterSrc: "/organization-site-administration-poster.jpg",
+  },
 ];
 
 function BrandMark() {
@@ -443,7 +450,9 @@ export default async function Home({ searchParams }: PageProps) {
             Start with the DroneScout Bridge field setup, then configure your
             team drones and <CalTopoTeamsLink /> account. Next, connect a
             controller video stream for squinter-assisted clue searching, then
-            finish with advanced Mutual Aid package preparation.
+            continue with advanced Mutual Aid package preparation. Managed
+            organizations can also follow the site-administration guide for
+            activation, policy, roles, enrollment, funding, and records.
           </p>
         </div>
         <div className="tutorial-grid">
