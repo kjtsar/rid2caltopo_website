@@ -47,8 +47,8 @@ const managedCapabilities = [
   },
   {
     number: "03",
-    title: "BVLOS flight record support",
-    copy: "Retain an organization-wide record of flights, tracks, timestamps, drone metadata, and exports to support FAA BVLOS documentation and review.",
+    title: "Flight record support",
+    copy: "Retain an organization-wide record of flights that document pilot, drone, distance, time, and weather information to record incident and training flights and support FAA waiver compliance.",
   },
   {
     number: "04",
@@ -61,8 +61,8 @@ const tutorials = [
   {
     duration: "3 min • Field setup",
     title: "Set up the DroneScout Bridge",
-    copy: "Choose the basic field kit, place the Bridge for useful line of sight, and verify live Remote ID reception before operations.",
-    videoSrc: "/dronescout-bridge-setup.mp4",
+    copy: "Enable Relay ping, place the Bridge for useful line of sight, and verify power and live Remote ID reception before operations.",
+    videoSrc: "/dronescout-bridge-setup.mp4?rev=20260804-relay-ping-on-audio",
     posterSrc: "/dronescout-bridge-setup-poster.jpg",
   },
   {
@@ -78,6 +78,13 @@ const tutorials = [
     copy: "Give a squinter a larger live view, bind video to Remote ID telemetry with the drone designator, and submit picture waypoints to the incident map.",
     videoSrc: "/stream-drone-video-to-rid2caltopo.mp4",
     posterSrc: "/stream-drone-video-to-rid2caltopo-poster.jpg",
+  },
+  {
+    duration: "5 min • Advanced Mutual Aid",
+    title: "Prepare and export a Mutual Aid package",
+    copy: "Prepare early, cache the operational map, set the expiration, and transfer locally by peer-to-peer wireless or a USB-C storage device to minimize Starlink and cellular traffic.",
+    videoSrc: "/prepare-mutual-aid-package.mp4?rev=20260804-dem-device",
+    posterSrc: "/prepare-mutual-aid-package-poster.jpg?rev=20260804-dem-device",
   },
 ];
 
@@ -117,6 +124,21 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <main className={`site-shell mode-${mode}`}>
+      <aside className="support-banner" aria-label="Community support">
+        <p>
+          <strong>Community-supported.</strong> Voluntary contributions help fund
+          development, hosting, and administration. Contributions do not
+          purchase access or priority.
+        </p>
+        <a
+          href="https://paypal.me/kjtgv"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Support RID2Caltopo through PayPal.Me"
+        >
+          Support the project <span aria-hidden="true">↗</span>
+        </a>
+      </aside>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="RID2Caltopo home">
           <BrandMark />
@@ -125,6 +147,7 @@ export default async function Home({ searchParams }: PageProps) {
         <nav className="main-nav" aria-label="Primary navigation">
           <a href="#capabilities">Capabilities</a>
           <a href="#tutorials">Tutorials</a>
+          <Link href="/tips">Tips &amp; tricks</Link>
           <a href="#get-started">Get started</a>
         </nav>
         <div className="edition-switch" aria-label="Website edition">
@@ -287,7 +310,7 @@ export default async function Home({ searchParams }: PageProps) {
             <div className="capability-panel-heading">
               <div>
                 <span className="cap-kicker">FREE RID2CALTOPO APP</span>
-                <h3>Works without a tracker.</h3>
+                <h3>Lots of capabilities included.</h3>
               </div>
               <span className="cap-price">$0</span>
             </div>
@@ -320,8 +343,9 @@ export default async function Home({ searchParams }: PageProps) {
               <span className="cap-adds">STARTER</span>
             </div>
             <p className="cap-summary">
-              The managed pilot starts with three practical needs.
-              Organizations can still self-host the open tracker instead.
+              The managed tracker provides a free 30 day trial, followed by
+              pay-as-you-go billing for the cost of services your team uses.
+              An expanding list of features includes:
             </p>
             <ol className="managed-feature-list">
               {managedCapabilities.map((capability) => (
@@ -334,14 +358,6 @@ export default async function Home({ searchParams }: PageProps) {
                 </li>
               ))}
             </ol>
-            <div className="planned-extension available-extension">
-              <span>MANAGED PILOT • AVAILABLE ON IOS AND ANDROID</span>
-              <strong>Pilot-authorized live video for Incident Command</strong>
-              <p>
-                IC may request temporary access when direct oversight is needed.
-                The feed begins only after approval in the RID2Caltopo app.
-              </p>
-            </div>
             <p className="compliance-note">
               Record retention supports an organization&apos;s documentation;
               operators remain responsible for their authorization, procedures,
@@ -393,7 +409,7 @@ export default async function Home({ searchParams }: PageProps) {
           <article className={isManaged ? "featured managed-plan" : "managed-plan"}>
             <div className="choice-top">
               <span className="choice-label">MANAGED PILOT</span>
-              <span className="price">$TBD <small>after pilot usage review</small></span>
+              <span className="price">Free 30 day trial <small>after trial, only pay for what your team uses</small></span>
             </div>
             <h3>Let us handle the tracker.</h3>
             <p>
@@ -404,7 +420,7 @@ export default async function Home({ searchParams }: PageProps) {
             <ul>
               <li>FAA, airspace, and protected-land checks</li>
               <li>Multiple R2C zones and Bridges per incident</li>
-              <li>Organization-wide BVLOS flight record support</li>
+              <li>Organization-wide flight record support</li>
               <li>Pilot-authorized live video to Incident Command</li>
               <li>Organization onboarding</li>
               <li>Reasonable-use cloud hosting</li>
@@ -413,9 +429,10 @@ export default async function Home({ searchParams }: PageProps) {
               Request a managed pilot <ArrowIcon />
             </a>
             <p className="fine-print">
-              We&apos;re inviting early organizations to try the managed service
-              while we measure normal cloud and administration costs. Any
-              future price will be discussed before charges begin.
+              Try the managed service for free for 30 days with a max $10
+              credit. The administrative panel lets you monitor actual costs
+              incurred by your team during the trial so you can determine if
+              the services provide reasonable value.
             </p>
           </article>
         </div>
@@ -429,8 +446,9 @@ export default async function Home({ searchParams }: PageProps) {
           </div>
           <p>
             Start with the DroneScout Bridge field setup, then configure your
-            team drones and <CalTopoTeamsLink /> account. Finally, connect a
-            controller video stream for squinter-assisted clue searching.
+            team drones and <CalTopoTeamsLink /> account. Next, connect a
+            controller video stream for squinter-assisted clue searching, then
+            finish with advanced Mutual Aid package preparation.
           </p>
         </div>
         <div className="tutorial-grid">
@@ -528,6 +546,7 @@ export default async function Home({ searchParams }: PageProps) {
             <strong>PROJECT</strong>
             <a href="https://github.com/kjtsar/RID2Caltopo">App source</a>
             <a href="https://github.com/kjtsar/r2c-tracker">Tracker source</a>
+            <Link href="/tips">Tips &amp; tricks</Link>
             <Link href="/?view=community">Community edition</Link>
           </div>
           <div>

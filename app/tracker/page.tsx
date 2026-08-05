@@ -21,6 +21,7 @@ export default function TrackerPage() {
         <nav aria-label="Information pages">
           <Link href="/capabilities">Capabilities</Link>
           <Link aria-current="page" href="/tracker">r2c-tracker</Link>
+          <Link href="/tips">Tips &amp; tricks</Link>
           <Link href="/#tutorials">Tutorials</Link>
         </nav>
       </header>
@@ -63,11 +64,11 @@ export default function TrackerPage() {
           </article>
           <article className="featured-price">
             <span className="choice-label">MANAGED PILOT</span>
-            <p className="tracker-price">$TBD <small>after pilot usage review</small></p>
+            <p className="tracker-price">Free 30 day trial <small>after trial, only pay for what your team uses</small></p>
             <h3>Managed for your team.</h3>
-            <p>We host and administer the tracker for volunteer organizations, provide onboarding, and include reasonable-use cloud operation so your team can focus on missions.</p>
+            <p>We host and administer the tracker for volunteer organizations, provide onboarding, and bill only for the cost of services each team uses.</p>
             <a className="button button-primary" href="/managed-pilot">Request the managed pilot <span aria-hidden="true">→</span></a>
-            <p className="fine-print">We&apos;re inviting early organizations to try the managed service while we measure normal cloud and administration costs. Any future price will be discussed before charges begin.</p>
+            <p className="fine-print">Try the managed service for free for 30 days with a max $10 credit. The administrative panel lets you monitor actual costs incurred by your team during the trial so you can determine if the services provide reasonable value.</p>
           </article>
         </div>
         <p className="pricing-note">

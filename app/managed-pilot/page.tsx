@@ -19,13 +19,13 @@ export default function ManagedPilotPage() {
       </header>
       <section className="request-layout">
         <div className="request-intro">
-          <p className="eyebrow">Managed pilot • Pricing $TBD</p>
+          <p className="eyebrow">Managed pilot • Free 30 day trial</p>
           <h1>Bring managed coordination<br /><em>to your team.</em></h1>
           <p>
             Provide your organization&apos;s details and we&apos;ll follow up about
             onboarding, expected field use, and whether the managed pilot fits
-            your needs. Early participation will help establish normal service
-            costs before any future pricing is set.
+            your needs. The trial includes a maximum $10 credit, and afterward
+            your organization pays only for the services it uses.
           </p>
         </div>
         <RequestForm kind="managed-pilot" />

@@ -74,6 +74,15 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /src="\/configure-team-drones-caltopo-teams\.mp4"/);
   assert.match(html, /Stream drone video to RID2Caltopo/);
   assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
+  assert.match(html, /href="\/tips">Tips &amp; tricks<\/a>/);
+  assert.match(html, /<strong>Community-supported\.<\/strong>/);
+  assert.match(html, /Contributions do not\s*purchase access or priority\./);
+  assert.match(
+    html,
+    /href="https:\/\/paypal\.me\/kjtgv"[^>]*target="_blank"[^>]*rel="noreferrer"/,
+  );
+  assert.match(html, /Support the project/);
+  assert.doesNotMatch(html, /tax[- ]deductible/i);
   assert.match(html, /rel="icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.match(html, /rel="apple-touch-icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
   assert.match(html, /rel="canonical" href="https:\/\/rid2caltopo\.org\/"/);
@@ -107,12 +116,47 @@ test("publishes host-specific robots and sitemap discovery", async () => {
   );
   const orgXml = await orgSitemap.text();
   assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/<\/loc>/);
+  assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/tips<\/loc>/);
   assert.doesNotMatch(orgXml, /rid2caltopo\.com/);
 
   assert.equal(comSitemap.status, 200);
   const comXml = await comSitemap.text();
   assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tracker<\/loc>/);
+  assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tips<\/loc>/);
   assert.doesNotMatch(comXml, /rid2caltopo\.org/);
+});
+
+test("publishes field tips for the shared Android and iOS workflow", async () => {
+  const response = await render("rid2caltopo.com", "/tips");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /Change a drone’s track colors/);
+  assert.match(html, /Show or hide the bearing line/);
+  assert.match(html, /Swap the map and stream in PiP/);
+  assert.match(html, /Resize the PiP window/);
+  assert.match(html, /Pilot Display/);
+  assert.match(html, /Long-press the PiP inset/);
+  assert.match(html, /These steps apply to both Android and iOS\./);
+});
+
+test("collects managed-pilot phone contact information for tracker administration", async () => {
+  const response = await render("rid2caltopo.org", "/managed-pilot");
+  assert.equal(response.status, 200);
+  const html = await response.text();
+
+  assert.match(html, /<input[^>]*name="phone"[^>]*>/);
+  assert.match(html, /type="tel"/);
+  assert.match(html, /Phone number/);
+  assert.match(html, /retained in the managed-pilot administration system/);
+
+  const workerSource = await readFile(
+    new URL("../worker/index.ts", import.meta.url),
+    "utf8",
+  );
+  assert.match(workerSource, /https:\/\/r2c-tracker\.com\/managed-access-requests/);
+  assert.match(workerSource, /MANAGED_REQUEST_INGEST_KEY/);
+  assert.match(workerSource, /requester_phone: phone/);
 });
 
 test("links every visible CalTopo Teams mention on the capabilities page", async () => {
@@ -134,9 +178,14 @@ test("keeps public copy drone-specific and ships correctly sized artwork", async
   assert.doesNotMatch(publicCopy, /\baircraft\b/i);
   assert.doesNotMatch(publicCopy, /Know where the drones have searched/i);
   assert.doesNotMatch(publicCopy, /\$100|100\/year/i);
-  assert.match(publicCopy, /Pricing \$TBD|after pilot usage review/);
-  assert.match(publicCopy, /MANAGED PILOT • AVAILABLE ON IOS AND ANDROID/);
-  assert.match(publicCopy, /The feed begins only after approval in the RID2Caltopo app\./);
+  assert.doesNotMatch(publicCopy, /\$TBD|after pilot usage review/);
+  assert.match(publicCopy, /Free 30 day trial/);
+  assert.match(publicCopy, /after trial, only pay for what your team uses/);
+  assert.match(publicCopy, /max \$10/);
+  assert.match(publicCopy, /Lots of capabilities included\./);
+  assert.match(publicCopy, /title: "Flight record support"/);
+  assert.match(publicCopy, /support FAA waiver compliance\./);
+  assert.doesNotMatch(publicCopy, /planned-extension|MANAGED PILOT • AVAILABLE/);
   assert.match(publicCopy, /mailto:\$\{contactEmail\}/);
   assert.match(publicCopy, /const contactEmail = "kjtsar@kjt\.us"/);
   assert.doesNotMatch(publicCopy, /kjtstar@kjt\.us|Founding pilot|Android support is in progress|Built honestly/i);

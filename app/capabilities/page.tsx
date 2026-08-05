@@ -35,6 +35,7 @@ export default function CapabilitiesPage() {
         <nav aria-label="Information pages">
           <Link aria-current="page" href="/capabilities">Capabilities</Link>
           <Link href="/tracker">r2c-tracker</Link>
+          <Link href="/tips">Tips &amp; tricks</Link>
           <Link href="/#tutorials">Tutorials</Link>
         </nav>
       </header>
@@ -89,15 +90,6 @@ export default function CapabilitiesPage() {
             Compare tracker options <span aria-hidden="true">→</span>
           </Link>
         </article>
-      </section>
-
-      <section className="status-band">
-        <strong>Current qualification</strong>
-        <p>
-          Pilot-authorized IC video is available on iOS and Android. Some
-          external-radio workflows still require physical-device qualification.
-          Planned work is identified as planned—not presented as field-ready.
-        </p>
       </section>
 
       <footer className="info-footer">

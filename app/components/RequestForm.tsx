@@ -30,6 +30,20 @@ export default function RequestForm({ kind }: RequestFormProps) {
           required
         />
       </div>
+      {managed && (
+        <div className="form-field">
+          <label htmlFor={`${kind}-phone`}>
+            Phone number <span>Optional</span>
+          </label>
+          <input
+            id={`${kind}-phone`}
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            maxLength={64}
+          />
+        </div>
+      )}
       <div className="form-field">
         <label htmlFor={`${kind}-organization`}>
           Organization name {!managed && <span>Optional</span>}
@@ -67,9 +81,10 @@ export default function RequestForm({ kind }: RequestFormProps) {
         />
       </div>
       <p className="form-privacy">
-        This information is emailed to the RID2Caltopo project contact and used
-        only to respond to your request. Do not include passwords, API keys, or
-        active-incident details.
+        This information is emailed to the RID2Caltopo project contact
+        {managed ? " and retained in the managed-pilot administration system" : ""}
+        {" "}only to respond to your request. Do not include passwords, API keys,
+        or active-incident details.
       </p>
       <button className="button button-primary" type="submit">
         {managed ? "Request the managed pilot" : "Request early app access"}

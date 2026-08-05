@@ -21,6 +21,7 @@ interface Env {
       };
     };
   };
+  MANAGED_REQUEST_INGEST_KEY: string;
 }
 
 const notificationAddress = "kjtsar@kjt.us";
@@ -28,6 +29,7 @@ const indexablePaths = [
   "/",
   "/capabilities",
   "/tracker",
+  "/tips",
   "/early-access",
   "/managed-pilot",
 ];
@@ -101,6 +103,7 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
   const requestType = cleanField(form.get("requestType"), 32);
   const name = cleanField(form.get("name"), 100);
   const email = cleanField(form.get("email"), 254);
+  const phone = cleanField(form.get("phone"), 64);
   const organization = cleanField(form.get("organization"), 120);
   const designator = cleanField(form.get("designator"), 24);
   const honeypot = cleanField(form.get("website"), 200);
@@ -130,6 +133,7 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
     "",
     `Name: ${name}`,
     `Email: ${email}`,
+    `Phone: ${phone || "Not provided"}`,
     `Organization: ${organization || "Not provided"}`,
     `Organization designator: ${designator || "Not provided"}`,
     "",
@@ -145,6 +149,30 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
       subject,
       text: body,
     });
+    if (managed) {
+      const intakeBody = new URLSearchParams({
+        requester_name: name,
+        requester_email: email,
+        requester_phone: phone,
+        organization_name: organization,
+        designator,
+        source_host: new URL(request.url).host,
+      });
+      const intakeResponse = await fetch(
+        "https://r2c-tracker.com/managed-access-requests",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${env.MANAGED_REQUEST_INGEST_KEY}`,
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: intakeBody,
+        },
+      );
+      if (!intakeResponse.ok) {
+        throw new Error(`Managed request storage failed (${intakeResponse.status})`);
+      }
+    }
   } catch (error) {
     console.error("Request email delivery failed", error);
     return Response.redirect(new URL("/request-error", request.url), 303);
