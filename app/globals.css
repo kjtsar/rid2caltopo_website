@@ -56,39 +56,6 @@ a:focus-visible {
   overflow: hidden;
 }
 
-.support-banner {
-  align-items: center;
-  background: var(--forest-deep);
-  color: var(--paper);
-  display: flex;
-  font-size: 13px;
-  gap: 24px;
-  justify-content: center;
-  line-height: 1.4;
-  min-height: 44px;
-  padding: 8px clamp(24px, 5vw, 80px);
-}
-
-.support-banner p {
-  margin: 0;
-}
-
-.support-banner a {
-  border-bottom: 1px solid var(--orange);
-  color: #ff9a6f;
-  flex: 0 0 auto;
-  font-family: var(--font-plex-mono), monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.035em;
-  padding-bottom: 2px;
-  text-transform: uppercase;
-}
-
-.support-banner a:hover {
-  color: #ffc1a6;
-}
-
 .site-header {
   align-items: center;
   background: rgba(251, 250, 245, 0.94);
@@ -1140,13 +1107,6 @@ footer {
 }
 
 @media (max-width: 560px) {
-  .support-banner {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px 16px 11px;
-  }
-
   .site-header {
     padding: 0 16px;
   }
@@ -1316,6 +1276,26 @@ footer {
   font-size: 12px;
   line-height: 1.55;
   margin: 30px 0 20px;
+}
+
+.form-acknowledgement {
+  align-items: flex-start;
+  background: rgba(242, 106, 46, 0.08);
+  border: 1px solid rgba(176, 68, 24, 0.35);
+  color: var(--ink);
+  display: grid;
+  font-size: 13px;
+  gap: 12px;
+  grid-template-columns: 20px 1fr;
+  line-height: 1.55;
+  margin: 0 0 22px;
+  padding: 16px;
+}
+
+.form-acknowledgement input {
+  height: 18px;
+  margin: 2px 0 0;
+  width: 18px;
 }
 
 .request-form .button {

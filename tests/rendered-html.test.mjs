@@ -77,10 +77,9 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /organization-site-administration\.mp4/);
   assert.match(html, /src="\/stream-drone-video-to-rid2caltopo\.mp4"/);
   assert.match(html, /href="\/tips">Tips &amp; tricks<\/a>/);
-  assert.match(html, /<strong>Community-supported\.<\/strong>/);
-  assert.match(html, /Contributions do not\s*purchase access or priority\./);
-  assert.match(html, /href="\/donations"/);
-  assert.match(html, /Support the project/);
+  assert.doesNotMatch(html, /<strong>Community-supported\.<\/strong>/);
+  assert.doesNotMatch(html, /href="\/donations"/);
+  assert.doesNotMatch(html, /Support the project/);
   assert.doesNotMatch(html, /href="https:\/\/paypal\.me\/kjtgv"/);
   assert.doesNotMatch(html, /tax[- ]deductible/i);
   assert.match(html, /rel="icon" href="https:\/\/rid2caltopo\.org\/app-icon-orange\.png"/);
@@ -117,18 +116,18 @@ test("publishes host-specific robots and sitemap discovery", async () => {
   const orgXml = await orgSitemap.text();
   assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/<\/loc>/);
   assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/tips<\/loc>/);
-  assert.match(orgXml, /<loc>https:\/\/rid2caltopo\.org\/donations<\/loc>/);
+  assert.doesNotMatch(orgXml, /\/donations<\/loc>/);
   assert.doesNotMatch(orgXml, /rid2caltopo\.com/);
 
   assert.equal(comSitemap.status, 200);
   const comXml = await comSitemap.text();
   assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tracker<\/loc>/);
   assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/tips<\/loc>/);
-  assert.match(comXml, /<loc>https:\/\/rid2caltopo\.com\/donations<\/loc>/);
+  assert.doesNotMatch(comXml, /\/donations<\/loc>/);
   assert.doesNotMatch(comXml, /rid2caltopo\.org/);
 });
 
-test("explains project history and donation priorities before opening PayPal", async () => {
+test("explains project history while personal contributions are paused", async () => {
   const response = await render("rid2caltopo.com", "/donations");
   assert.equal(response.status, 200);
   const html = await response.text();
@@ -137,19 +136,11 @@ test("explains project history and donation priorities before opening PayPal", a
   assert.match(html, /converted drone tracks to GeoJSON for import into CalTopo/);
   assert.match(html, /many hundreds of hours/);
   assert.match(html, /hundreds of dollars on AI tokens/);
-  assert.match(html, /Development first\./);
-  assert.match(html, /NCSSAR/);
-  assert.match(html, /additional donations will go to our local/);
-  assert.match(html, /Nevada County Sheriff&#x27;s Search and Rescue/);
-  assert.equal(
-    html.match(/href="https:\/\/nevadacountysar\.org\/"/g)?.length,
-    2,
-  );
-  assert.match(
-    html,
-    /href="https:\/\/paypal\.me\/kjtgv"[^>]*target="_blank"[^>]*rel="noreferrer"/,
-  );
-  assert.match(html, /No charitable tax receipt is offered/);
+  assert.match(html, /Personal contributions are paused\./);
+  assert.match(html, /not currently accepting personal donations/);
+  assert.match(html, /No payment is required to request managed-pilot access/);
+  assert.match(html, /No personal payment link is active\./);
+  assert.doesNotMatch(html, /href="https:\/\/paypal\.me\/kjtgv"/);
 });
 
 test("publishes field tips for the shared Android and iOS workflow", async () => {
@@ -175,6 +166,10 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(html, /type="tel"/);
   assert.match(html, /Phone number/);
   assert.match(html, /retained in the managed-pilot administration system/);
+  assert.match(html, /name="termsAcknowledged"/);
+  assert.match(html, /supplemental situational awareness/);
+  assert.match(html, /must not be used as the sole source/);
+  assert.match(html, /independently verifying safety-critical information/);
 
   const workerSource = await readFile(
     new URL("../worker/index.ts", import.meta.url),
@@ -183,6 +178,9 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(workerSource, /https:\/\/r2c-tracker\.com\/managed-access-requests/);
   assert.match(workerSource, /MANAGED_REQUEST_INGEST_KEY/);
   assert.match(workerSource, /requester_phone: phone/);
+  assert.match(workerSource, /terms_acknowledged: "yes"/);
+  assert.match(workerSource, /terms_version: termsVersion/);
+  assert.match(workerSource, /termsVersion !== managedAccessTermsVersion/);
 });
 
 test("links every visible CalTopo Teams mention on the capabilities page", async () => {

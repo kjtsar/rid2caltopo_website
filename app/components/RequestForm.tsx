@@ -2,12 +2,17 @@ type RequestFormProps = {
   kind: "early-access" | "managed-pilot";
 };
 
+const managedAccessTermsVersion = "2026-08-06";
+
 export default function RequestForm({ kind }: RequestFormProps) {
   const managed = kind === "managed-pilot";
 
   return (
     <form className="request-form" action="/api/request" method="post">
       <input type="hidden" name="requestType" value={kind} />
+      {managed && (
+        <input type="hidden" name="termsVersion" value={managedAccessTermsVersion} />
+      )}
       <div className="form-field">
         <label htmlFor={`${kind}-name`}>Your name</label>
         <input
@@ -86,6 +91,20 @@ export default function RequestForm({ kind }: RequestFormProps) {
         {" "}only to respond to your request. Do not include passwords, API keys,
         or active-incident details.
       </p>
+      {managed && (
+        <label className="form-acknowledgement">
+          <input type="checkbox" name="termsAcknowledged" value="yes" required />
+          <span>
+            I am authorized to request access for this organization. I understand
+            that RID2Caltopo and r2c-tracker provide supplemental situational
+            awareness, may be unavailable or contain incomplete or delayed
+            information, and must not be used as the sole source for navigation,
+            flight safety, communications, or incident-command decisions. My
+            organization remains responsible for its operations and for independently
+            verifying safety-critical information.
+          </span>
+        </label>
+      )}
       <button className="button button-primary" type="submit">
         {managed ? "Request the managed pilot" : "Request early app access"}
         <span aria-hidden="true">→</span>

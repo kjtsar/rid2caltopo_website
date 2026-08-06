@@ -25,12 +25,12 @@ interface Env {
 }
 
 const notificationAddress = "kjtsar@kjt.us";
+const managedAccessTermsVersion = "2026-08-06";
 const indexablePaths = [
   "/",
   "/capabilities",
   "/tracker",
   "/tips",
-  "/donations",
   "/early-access",
   "/managed-pilot",
 ];
@@ -107,6 +107,8 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
   const phone = cleanField(form.get("phone"), 64);
   const organization = cleanField(form.get("organization"), 120);
   const designator = cleanField(form.get("designator"), 24);
+  const termsVersion = cleanField(form.get("termsVersion"), 32);
+  const termsAcknowledged = cleanField(form.get("termsAcknowledged"), 8);
   const honeypot = cleanField(form.get("website"), 200);
   const managed = requestType === "managed-pilot";
 
@@ -121,7 +123,12 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
     !name ||
     !validEmail(email) ||
     (requestType !== "early-access" && !managed) ||
-    (managed && (!organization || !designator))
+    (managed && (
+      !organization ||
+      !designator ||
+      termsAcknowledged !== "yes" ||
+      termsVersion !== managedAccessTermsVersion
+    ))
   ) {
     return Response.redirect(new URL("/request-error", request.url), 303);
   }
@@ -137,6 +144,9 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
     `Phone: ${phone || "Not provided"}`,
     `Organization: ${organization || "Not provided"}`,
     `Organization designator: ${designator || "Not provided"}`,
+    ...(managed
+      ? [`Safety terms acknowledged: ${termsVersion}`]
+      : []),
     "",
     `Submitted: ${new Date().toISOString()}`,
     `Site: ${new URL(request.url).host}`,
@@ -158,6 +168,8 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
         organization_name: organization,
         designator,
         source_host: new URL(request.url).host,
+        terms_acknowledged: "yes",
+        terms_version: termsVersion,
       });
       const intakeResponse = await fetch(
         "https://r2c-tracker.com/managed-access-requests",

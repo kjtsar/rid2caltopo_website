@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Donations",
+  title: "Project support",
   description:
-    "Learn how RID2Caltopo grew, the principles guiding its development, and how voluntary contributions are used.",
+    "Learn how RID2Caltopo grew, the principles guiding its development, and the current project-support policy.",
   alternates: { canonical: "/donations" },
 };
 
@@ -42,13 +42,13 @@ export default function DonationsPage() {
           <Link href="/capabilities">Capabilities</Link>
           <Link href="/tracker">r2c-tracker</Link>
           <Link href="/tips">Tips &amp; tricks</Link>
-          <Link aria-current="page" href="/donations">Donations</Link>
+          <Link aria-current="page" href="/donations">Project support</Link>
         </nav>
       </header>
 
       <section className="info-hero donations-hero">
-        <p className="eyebrow">Donations</p>
-        <h1>Built for the search.<br /><em>Sustained by the community.</em></h1>
+        <p className="eyebrow">Project support</p>
+        <h1>Built for the search.<br /><em>Structured for the public good.</em></h1>
         <p>
           RID2Caltopo began a little over a year ago as a Python script that
           converted drone tracks to GeoJSON for import into CalTopo. Field needs
@@ -97,61 +97,33 @@ export default function DonationsPage() {
 
       <section className="info-section donation-funding">
         <div className="funding-copy">
-          <p className="eyebrow">Where contributions go</p>
-          <h2>
-            Development first.{" "}
-            <a
-              className="organization-link"
-              href="https://nevadacountysar.org/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              NCSSAR
-            </a>{" "}
-            next.
-          </h2>
+          <p className="eyebrow">Current policy</p>
+          <h2>Personal contributions are paused.</h2>
           <p>
-            Contributions initially offset project development expenses,
-            including the tools and AI resources used to design, implement,
-            test, document, and publish RID2Caltopo and r2c-tracker.
+            RID2Caltopo is not currently accepting personal donations while a
+            fiscal sponsorship and an appropriate long-term operating structure
+            are evaluated.
           </p>
           <p>
-            As the user base grows, managed-service usage payments are intended
-            to cover operating costs. After development costs are covered, any
-            additional donations will go to our local{" "}
-            <a
-              className="organization-link"
-              href="https://nevadacountysar.org/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Nevada County Sheriff&apos;s Search and Rescue
-            </a>
-            .
+            No payment is required to request managed-pilot access or to use the
+            community field app. If a formal contribution path is approved,
+            its administrator, terms, and tax status will be published here.
           </p>
         </div>
-        <aside className="donation-action" aria-label="Make a voluntary contribution">
-          <span>VOLUNTARY SUPPORT</span>
-          <h3>Help continue the work.</h3>
+        <aside className="donation-action" aria-label="Project support status">
+          <span>CONTRIBUTIONS PAUSED</span>
+          <h3>No personal payment link is active.</h3>
           <p>
-            Contributions do not purchase product access, service priority, or
-            operational influence. No charitable tax receipt is offered through
-            this PayPal link.
+            Access, support, and operational decisions are not conditioned on a
+            contribution. Questions about future organizational support may be
+            sent through the project contact address.
           </p>
-          <a
-            className="button button-primary"
-            href="https://paypal.me/kjtgv"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contribute through PayPal <span aria-hidden="true">↗</span>
-          </a>
         </aside>
       </section>
 
       <footer className="info-footer">
         <Link href="/">← Back to RID2Caltopo</Link>
-        <span>Community-supported development for SAR drone teams</span>
+        <span>Public-safety software for SAR drone teams</span>
       </footer>
     </main>
   );

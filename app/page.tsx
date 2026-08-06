@@ -131,16 +131,6 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <main className={`site-shell mode-${mode}`}>
-      <aside className="support-banner" aria-label="Community support">
-        <p>
-          <strong>Community-supported.</strong> Voluntary contributions help fund
-          development, hosting, and administration. Contributions do not
-          purchase access or priority.
-        </p>
-        <Link href="/donations" aria-label="Learn how contributions support RID2Caltopo">
-          Support the project <span aria-hidden="true">→</span>
-        </Link>
-      </aside>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="RID2Caltopo home">
           <BrandMark />
