@@ -25,7 +25,7 @@ interface Env {
 }
 
 const notificationAddress = "kjtsar@kjt.us";
-const managedAccessTermsVersion = "2026-08-07";
+const managedAccessTermsVersion = "2026-08-08";
 const indexablePaths = [
   "/",
   "/capabilities",

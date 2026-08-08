@@ -111,6 +111,13 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         {children}
+        <aside className="site-affiliation-notice" aria-label="CalTopo relationship">
+          <strong>Independent project.</strong> RID2Caltopo is not affiliated with or
+          endorsed by CalTopo. It uses the{" "}
+          <a href="https://caltopo.com/about/teams/">CalTopo Teams</a> API. The
+          RID2Caltopo developer thanks the CalTopo team for its excellent product and
+          support of the Teams API.
+        </aside>
       </body>
     </html>
   );

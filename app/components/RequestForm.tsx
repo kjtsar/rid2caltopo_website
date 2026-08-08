@@ -2,7 +2,7 @@ type RequestFormProps = {
   kind: "early-access" | "managed-pilot";
 };
 
-const managedAccessTermsVersion = "2026-08-07";
+const managedAccessTermsVersion = "2026-08-08";
 
 export default function RequestForm({ kind }: RequestFormProps) {
   const managed = kind === "managed-pilot";
@@ -70,7 +70,7 @@ export default function RequestForm({ kind }: RequestFormProps) {
           id={`${kind}-designator`}
           name="designator"
           type="text"
-          placeholder="For example, NCSSAR"
+          placeholder="For example, mySAR"
           maxLength={24}
           required={managed}
         />
@@ -105,7 +105,9 @@ export default function RequestForm({ kind }: RequestFormProps) {
             supplemental situational awareness only and must not be used as the sole
             source for navigation, flight safety, communications, or incident-command
             decisions. My organization remains responsible for its operations and for
-            independently verifying safety-critical information.
+            independently verifying safety-critical information. RID2Caltopo is an
+            independent project and is not affiliated with or endorsed by CalTopo; it
+            uses the CalTopo Teams API.
           </span>
         </label>
       )}

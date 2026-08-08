@@ -167,7 +167,9 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(html, /Phone number/);
   assert.match(html, /retained in the managed-pilot administration system/);
   assert.match(html, /name="termsAcknowledged"/);
-  assert.match(html, /name="termsVersion" value="2026-08-07"/);
+  assert.match(html, /name="termsVersion" value="2026-08-08"/);
+  assert.match(html, /placeholder="For example, mySAR"/);
+  assert.doesNotMatch(html, /NCSSAR|Nevada County Sheriff/i);
   assert.match(html, /best-effort/);
   assert.match(html, /as is/);
   assert.match(html, /as available/);
@@ -177,6 +179,10 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(html, /supplemental situational awareness/);
   assert.match(html, /must not be used as the sole source/);
   assert.match(html, /independently verifying safety-critical information/);
+  assert.match(html, /independent project/);
+  assert.match(html, /not affiliated with or endorsed by CalTopo/);
+  assert.match(html, /uses the CalTopo Teams API/);
+  assert.match(html, /thanks the CalTopo team/);
 
   const workerSource = await readFile(
     new URL("../worker/index.ts", import.meta.url),
@@ -188,7 +194,7 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(workerSource, /terms_acknowledged: "yes"/);
   assert.match(workerSource, /terms_version: termsVersion/);
   assert.match(workerSource, /termsVersion !== managedAccessTermsVersion/);
-  assert.match(workerSource, /managedAccessTermsVersion = "2026-08-07"/);
+  assert.match(workerSource, /managedAccessTermsVersion = "2026-08-08"/);
   assert.match(workerSource, /Best-effort safety terms acknowledged/);
 });
 
