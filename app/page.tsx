@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
-import { CalTopoTeamsLink, CalTopoTeamsText } from "./components/CalTopoTeamsLink";
+import {
+  CalTopoLink,
+  CalTopoTeamsLink,
+  CalTopoText,
+} from "./components/CalTopoTeamsLink";
 import { EmailContact } from "./components/EmailContact";
 
 type SiteMode = "community" | "managed";
@@ -316,7 +320,7 @@ export default async function Home({ searchParams }: PageProps) {
                 <li key={capability}>
                   <span className="capability-check" aria-hidden="true">✓</span>
                   <span className="capability-copy">
-                    <CalTopoTeamsText text={capability} />
+                    <CalTopoText text={capability} />
                   </span>
                 </li>
               ))}
@@ -345,7 +349,7 @@ export default async function Home({ searchParams }: PageProps) {
                   <span>{capability.number}</span>
                   <div>
                     <strong>{capability.title}</strong>
-                    <p>{capability.copy}</p>
+                    <p><CalTopoText text={capability.copy} /></p>
                   </div>
                 </li>
               ))}
@@ -367,7 +371,7 @@ export default async function Home({ searchParams }: PageProps) {
           <p className="eyebrow">Choose your path</p>
           <h2>The app stays free. Coordination is your choice.</h2>
           <p>
-            The app and Bridge can work directly with CalTopo. Teams that need
+            The app and Bridge can work directly with <CalTopoLink />. Teams that need
             distributed coordination can learn about the{" "}
             <a className="inline-link" href="/tracker">r2c-tracker service</a>,
             host it themselves, or join the managed pilot.
@@ -381,13 +385,13 @@ export default async function Home({ searchParams }: PageProps) {
             </div>
             <h3>Run it your way.</h3>
             <p>
-              Use the mobile app locally, publish directly to CalTopo, or deploy
+              Use the mobile app locally, publish directly to <CalTopoLink />, or deploy
               and administer your own open-source tracker.
             </p>
             <ul>
               <li>Free Android and Apple apps</li>
               <li>Local Remote ID awareness</li>
-              <li>Optional CalTopo publishing</li>
+              <li>Optional <CalTopoLink /> publishing</li>
               <li>Open r2c-tracker source</li>
             </ul>
             <a
@@ -468,8 +472,8 @@ export default async function Home({ searchParams }: PageProps) {
                 </div>
               )}
               <p className="step">{tutorial.duration}</p>
-              <h3><CalTopoTeamsText text={tutorial.title} /></h3>
-              <p><CalTopoTeamsText text={tutorial.copy} /></p>
+              <h3><CalTopoText text={tutorial.title} /></h3>
+              <p><CalTopoText text={tutorial.copy} /></p>
               {tutorial.videoSrc ? (
                 <a className="watch-now" href={tutorial.videoSrc}>
                   Watch or download video <ArrowIcon />

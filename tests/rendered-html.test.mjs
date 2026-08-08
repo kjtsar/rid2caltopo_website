@@ -28,18 +28,21 @@ async function render(host = "rid2caltopo.org", path = "/") {
   );
 }
 
-function assertEveryVisibleCalTopoTeamsMentionIsLinked(html) {
+function assertEveryVisibleCalTopoMentionOpensDisclosure(html) {
   const body = html.match(/<body[^>]*>([\s\S]*?)<\/body>/)?.[1] ?? "";
   const visibleMarkup = body
     .replace(/<script[\s\S]*?<\/script>/g, "")
+    .replace(/<dialog[\s\S]*?<\/dialog>/g, "")
+    .replace(/<a[^>]+class="brand"[\s\S]*?<\/a>/g, "")
     .replace(/\saria-label="[^"]*"/g, "");
-  const mentions = visibleMarkup.match(/CalTopo Teams/g) ?? [];
-  const links = visibleMarkup.match(
-    /<a[^>]+href="https:\/\/caltopo\.com\/about\/teams\/"[^>]*>CalTopo Teams<\/a>/g,
+  const withoutProductName = visibleMarkup.replace(/RID2CalTopo|RID2Caltopo/g, "");
+  const mentions = withoutProductName.match(/CalTopo(?: Teams)?/g) ?? [];
+  const disclosureLinks = withoutProductName.match(
+    /<button[^>]+class="caltopo-disclosure-link"[^>]+aria-haspopup="dialog"[^>]*>CalTopo(?: Teams)?<\/button>/g,
   ) ?? [];
 
   assert.ok(mentions.length > 0);
-  assert.equal(mentions.length, links.length);
+  assert.equal(mentions.length, disclosureLinks.length);
 }
 
 test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
@@ -68,9 +71,12 @@ test("renders the RID2Caltopo landing page and app-icon metadata", async () => {
   assert.match(html, /DS100 details and purchase options/);
   assert.match(
     html,
-    /href="https:\/\/caltopo\.com\/about\/teams\/"[^>]*>CalTopo Teams<\/a>/,
+    /class="caltopo-disclosure-link"[^>]+aria-haspopup="dialog"[^>]*>CalTopo Teams<\/button>/,
   );
-  assertEveryVisibleCalTopoTeamsMentionIsLinked(html);
+  assertEveryVisibleCalTopoMentionOpensDisclosure(html);
+  assert.match(html, /RID2Caltopo is not a CalTopo product\./);
+  assert.match(html, /not affiliated with, sponsored by, or endorsed by CalTopo/);
+  assert.match(html, /thankful to the CalTopo developers/);
   assert.match(html, /src="\/configure-team-drones-caltopo-teams\.mp4"/);
   assert.match(html, /Stream drone video to RID2Caltopo/);
   assert.match(html, /Administer an organization site/);
@@ -133,7 +139,8 @@ test("explains project history while personal contributions are paused", async (
   const html = await response.text();
 
   assert.match(html, /began a little over a year ago as a Python script/);
-  assert.match(html, /converted drone tracks to GeoJSON for import into CalTopo/);
+  assert.match(html, /converted drone tracks to GeoJSON for import into/);
+  assertEveryVisibleCalTopoMentionOpensDisclosure(html);
   assert.match(html, /many hundreds of hours/);
   assert.match(html, /hundreds of dollars on AI tokens/);
   assert.match(html, /Personal contributions are paused\./);
@@ -180,9 +187,10 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(html, /must not be used as the sole source/);
   assert.match(html, /independently verifying safety-critical information/);
   assert.match(html, /independent project/);
-  assert.match(html, /not affiliated with or endorsed by CalTopo/);
-  assert.match(html, /uses the CalTopo Teams API/);
-  assert.match(html, /thanks the CalTopo team/);
+  assert.match(html, /not affiliated with, sponsored by, or endorsed by CalTopo/);
+  assert.match(html, /through the CalTopo Teams/);
+  assert.match(html, /thankful to the CalTopo developers/);
+  assertEveryVisibleCalTopoMentionOpensDisclosure(html);
 
   const workerSource = await readFile(
     new URL("../worker/index.ts", import.meta.url),
@@ -198,10 +206,32 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(workerSource, /Best-effort safety terms acknowledged/);
 });
 
-test("links every visible CalTopo Teams mention on the capabilities page", async () => {
+test("opens the relationship disclosure for every visible CalTopo mention on the capabilities page", async () => {
   const response = await render("rid2caltopo.com", "/capabilities");
   assert.equal(response.status, 200);
-  assertEveryVisibleCalTopoTeamsMentionIsLinked(await response.text());
+  assertEveryVisibleCalTopoMentionOpensDisclosure(await response.text());
+});
+
+test("uses the disclosure control for CalTopo references on every public page", async () => {
+  const paths = [
+    "/",
+    "/capabilities",
+    "/donations",
+    "/early-access",
+    "/managed-pilot",
+    "/request-error",
+    "/request-received",
+    "/tips",
+    "/tracker",
+  ];
+
+  for (const path of paths) {
+    const response = await render("rid2caltopo.com", path);
+    assert.equal(response.status, 200, path);
+    const html = await response.text();
+    assertEveryVisibleCalTopoMentionOpensDisclosure(html);
+    assert.match(html, /RID2Caltopo is not a CalTopo product\./, path);
+  }
 });
 
 test("keeps public copy drone-specific and ships correctly sized artwork", async () => {

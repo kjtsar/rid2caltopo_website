@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Barlow, IBM_Plex_Mono } from "next/font/google";
 import { headers } from "next/headers";
+import {
+  CalTopoDisclosurePanel,
+  CalTopoLink,
+} from "./components/CalTopoTeamsLink";
 import "./globals.css";
 
 function canonicalHost(requestHeaders: Headers): string {
@@ -59,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title:
         "RID2Caltopo — Track drone assignments and search coverage in real time",
       description:
-        "Open tools for Remote ID awareness, CalTopo tracks, and coordinated SAR drone operations.",
+        "Open tools for Remote ID awareness, incident-map tracks, and coordinated SAR drone operations.",
       images: [{ url: socialImage, width: 1792, height: 907 }],
     },
     twitter: {
@@ -67,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title:
         "RID2Caltopo — Track drone assignments and search coverage in real time",
       description:
-        "Open tools for Remote ID awareness, CalTopo tracks, and coordinated SAR drone operations.",
+        "Open tools for Remote ID awareness, incident-map tracks, and coordinated SAR drone operations.",
       images: [socialImage],
     },
   };
@@ -99,7 +103,7 @@ export default async function RootLayout({
         isAccessibleForFree: true,
         codeRepository: "https://github.com/kjtsar/RID2Caltopo",
         description:
-          "Remote ID field awareness, CalTopo track publishing, and drone search coordination for search-and-rescue teams.",
+          "Remote ID field awareness, incident-map publishing, and drone search coordination for search-and-rescue teams.",
       },
     ],
   };
@@ -112,12 +116,10 @@ export default async function RootLayout({
         />
         {children}
         <aside className="site-affiliation-notice" aria-label="CalTopo relationship">
-          <strong>Independent project.</strong> RID2Caltopo is not affiliated with or
-          endorsed by CalTopo. It uses the{" "}
-          <a href="https://caltopo.com/about/teams/">CalTopo Teams</a> API. The
-          RID2Caltopo developer thanks the CalTopo team for its excellent product and
-          support of the Teams API.
+          <strong>Independent project.</strong>{" "}
+          <CalTopoLink /> relationship and Teams API disclosure
         </aside>
+        <CalTopoDisclosurePanel />
       </body>
     </html>
   );

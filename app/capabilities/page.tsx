@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CalTopoTeamsText } from "../components/CalTopoTeamsLink";
+import { CalTopoLink, CalTopoText } from "../components/CalTopoTeamsLink";
 
 export const metadata: Metadata = {
   title: "Capabilities",
@@ -60,11 +60,11 @@ export default function CapabilitiesPage() {
           <p>
             A DroneScout Bridge is required for reliable Remote ID
             reception. The RID2Caltopo app records what it receives and can
-            publish directly to the team&apos;s CalTopo incident map.
+            publish directly to the team&apos;s <CalTopoLink /> incident map.
           </p>
           <ul className="info-list">
             {fieldCapabilities.map((capability) => (
-              <li key={capability}><CalTopoTeamsText text={capability} /></li>
+              <li key={capability}><CalTopoText text={capability} /></li>
             ))}
           </ul>
           <Link className="button button-secondary" href="/early-access">

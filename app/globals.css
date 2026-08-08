@@ -51,6 +51,30 @@ a:focus-visible {
   text-underline-offset: 3px;
 }
 
+.caltopo-disclosure-link {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--orange-dark);
+  cursor: pointer;
+  display: inline;
+  font: inherit;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.caltopo-disclosure-link:hover {
+  color: var(--orange);
+}
+
+.caltopo-disclosure-link:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
 .site-shell {
   min-height: 100vh;
   overflow: hidden;
@@ -1875,6 +1899,71 @@ footer {
 .site-affiliation-notice a {
   color: #ffb08c;
   text-underline-offset: 3px;
+}
+
+.site-affiliation-notice .caltopo-disclosure-link {
+  color: #ffb08c;
+}
+
+.caltopo-disclosure-dialog {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  max-height: calc(100vh - 32px);
+  max-width: 680px;
+  padding: 0;
+  width: calc(100% - 32px);
+}
+
+.caltopo-disclosure-dialog::backdrop {
+  background: rgba(6, 18, 12, 0.78);
+  backdrop-filter: blur(3px);
+}
+
+.caltopo-disclosure-panel {
+  background: var(--paper);
+  border-top: 6px solid var(--orange);
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.34);
+  padding: clamp(28px, 6vw, 54px);
+  position: relative;
+}
+
+.caltopo-disclosure-panel h2 {
+  font-size: clamp(30px, 5vw, 48px);
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  margin-bottom: 22px;
+}
+
+.caltopo-disclosure-panel > p:not(.eyebrow) {
+  color: #3d4a42;
+  font-size: 17px;
+  line-height: 1.58;
+}
+
+.caltopo-disclosure-panel .button {
+  margin-top: 10px;
+}
+
+.caltopo-disclosure-close-form {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+}
+
+.caltopo-disclosure-close-form button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  font-size: 25px;
+  height: 38px;
+  justify-content: center;
+  line-height: 1;
+  width: 38px;
 }
 
 @media (max-width: 800px) {

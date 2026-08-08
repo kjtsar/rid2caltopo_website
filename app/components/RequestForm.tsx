@@ -1,3 +1,5 @@
+import { CalTopoLink, CalTopoTeamsLink } from "./CalTopoTeamsLink";
+
 type RequestFormProps = {
   kind: "early-access" | "managed-pilot";
 };
@@ -106,8 +108,8 @@ export default function RequestForm({ kind }: RequestFormProps) {
             source for navigation, flight safety, communications, or incident-command
             decisions. My organization remains responsible for its operations and for
             independently verifying safety-critical information. RID2Caltopo is an
-            independent project and is not affiliated with or endorsed by CalTopo; it
-            uses the CalTopo Teams API.
+            independent project and is not affiliated with or endorsed by{" "}
+            <CalTopoLink />; it uses the <CalTopoTeamsLink /> API.
           </span>
         </label>
       )}

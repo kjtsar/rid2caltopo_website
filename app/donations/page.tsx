@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CalTopoLink } from "../components/CalTopoTeamsLink";
 
 export const metadata: Metadata = {
   title: "Project support",
@@ -51,7 +52,7 @@ export default function DonationsPage() {
         <h1>Built for the search.<br /><em>Structured for the public good.</em></h1>
         <p>
           RID2Caltopo began a little over a year ago as a Python script that
-          converted drone tracks to GeoJSON for import into CalTopo. Field needs
+          converted drone tracks to GeoJSON for import into <CalTopoLink />. Field needs
           kept pulling it forward, and it has grown into a small ecosystem
           supporting our SAR drone team&apos;s work.
         </p>
@@ -65,7 +66,7 @@ export default function DonationsPage() {
         <div className="donation-story">
           <p>
             What started as track conversion now spans Android and iOS field
-            apps, DroneScout Bridge reception, CalTopo publishing, local and
+            apps, DroneScout Bridge reception, <CalTopoLink /> publishing, local and
             pilot-authorized video, incident coordination, flight records, and
             an expanding set of operational tools.
           </p>
