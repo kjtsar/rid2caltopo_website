@@ -25,7 +25,7 @@ interface Env {
 }
 
 const notificationAddress = "kjtsar@kjt.us";
-const managedAccessTermsVersion = "2026-08-06";
+const managedAccessTermsVersion = "2026-08-07";
 const indexablePaths = [
   "/",
   "/capabilities",
@@ -145,7 +145,7 @@ async function handleRequestForm(request: Request, env: Env): Promise<Response> 
     `Organization: ${organization || "Not provided"}`,
     `Organization designator: ${designator || "Not provided"}`,
     ...(managed
-      ? [`Safety terms acknowledged: ${termsVersion}`]
+      ? [`Best-effort safety terms acknowledged: ${termsVersion}`]
       : []),
     "",
     `Submitted: ${new Date().toISOString()}`,

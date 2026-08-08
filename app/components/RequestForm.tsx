@@ -2,7 +2,7 @@ type RequestFormProps = {
   kind: "early-access" | "managed-pilot";
 };
 
-const managedAccessTermsVersion = "2026-08-06";
+const managedAccessTermsVersion = "2026-08-07";
 
 export default function RequestForm({ kind }: RequestFormProps) {
   const managed = kind === "managed-pilot";
@@ -96,12 +96,16 @@ export default function RequestForm({ kind }: RequestFormProps) {
           <input type="checkbox" name="termsAcknowledged" value="yes" required />
           <span>
             I am authorized to request access for this organization. I understand
-            that RID2Caltopo and r2c-tracker provide supplemental situational
-            awareness, may be unavailable or contain incomplete or delayed
-            information, and must not be used as the sole source for navigation,
-            flight safety, communications, or incident-command decisions. My
-            organization remains responsible for its operations and for independently
-            verifying safety-critical information.
+            that RID2Caltopo and r2c-tracker are provided on a best-effort,
+            &quot;as is,&quot; and &quot;as available&quot; basis, with no express
+            or implied warranties or guarantees, including merchantability, fitness
+            for a particular purpose, non-infringement, suitability, reliability,
+            availability, accuracy, or completeness. Features and information may be
+            unavailable, inaccurate, incomplete, or delayed. These tools provide
+            supplemental situational awareness only and must not be used as the sole
+            source for navigation, flight safety, communications, or incident-command
+            decisions. My organization remains responsible for its operations and for
+            independently verifying safety-critical information.
           </span>
         </label>
       )}

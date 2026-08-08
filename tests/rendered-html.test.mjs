@@ -167,6 +167,13 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(html, /Phone number/);
   assert.match(html, /retained in the managed-pilot administration system/);
   assert.match(html, /name="termsAcknowledged"/);
+  assert.match(html, /name="termsVersion" value="2026-08-07"/);
+  assert.match(html, /best-effort/);
+  assert.match(html, /as is/);
+  assert.match(html, /as available/);
+  assert.match(html, /no express or implied warranties or guarantees/);
+  assert.match(html, /suitability, reliability/);
+  assert.match(html, /availability, accuracy, or completeness/);
   assert.match(html, /supplemental situational awareness/);
   assert.match(html, /must not be used as the sole source/);
   assert.match(html, /independently verifying safety-critical information/);
@@ -181,6 +188,8 @@ test("collects managed-pilot phone contact information for tracker administratio
   assert.match(workerSource, /terms_acknowledged: "yes"/);
   assert.match(workerSource, /terms_version: termsVersion/);
   assert.match(workerSource, /termsVersion !== managedAccessTermsVersion/);
+  assert.match(workerSource, /managedAccessTermsVersion = "2026-08-07"/);
+  assert.match(workerSource, /Best-effort safety terms acknowledged/);
 });
 
 test("links every visible CalTopo Teams mention on the capabilities page", async () => {
